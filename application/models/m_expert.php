@@ -194,6 +194,11 @@ class m_expert extends CI_Model
         $this->db->update($this->devicegjl, $data, $where);
         return $this->db->affected_rows();
     }
+    public function updatedmg($where, $data)
+    {
+        $this->db->update($this->devicedmg, $data, $where);
+        return $this->db->affected_rows();
+    }
 
     public function deletedvc_by_id($id)
     {
@@ -205,6 +210,11 @@ class m_expert extends CI_Model
     {
         $this->db->where('id_gejala', $id);
         $this->db->delete($this->devicegjl);
+    }
+    public function deletedmg_by_id($id)
+    {
+        $this->db->where('id_kerusakan', $id);
+        $this->db->delete($this->devicedmg);
     }
 
 
@@ -230,6 +240,14 @@ class m_expert extends CI_Model
     {
         $this->db->from($this->devicegjl);
         $this->db->where('id_gejala', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+    public function getdmg_by_id($id)
+    {
+        $this->db->from($this->devicedmg);
+        $this->db->where('id_kerusakan', $id);
         $query = $this->db->get();
 
         return $query->row();

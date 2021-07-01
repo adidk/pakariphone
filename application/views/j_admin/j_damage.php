@@ -56,7 +56,7 @@
             success: function(data) {
                 $('[name="id_dmg"]').val(data.id_dmg);
                 $('#modal_form').modal('show'); // show bootstrap modal
-                $('.modal-title').text('Add Device'); // Set Title to Bootstrap modal title
+                $('.modal-title').text('Tambah Kerusakan'); // Set Title to Bootstrap modal title
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error get data from ajax');
@@ -64,8 +64,8 @@
         });
     }
 
-    function edit_dvc(id) {
-        save_method_device = 'update';
+    function edit_dmg(id) {
+        save_method_damage = 'update';
         $('#form')[0].reset(); // reset form on modals
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
@@ -73,28 +73,16 @@
 
         //Ajax Load data from ajax
         $.ajax({
-            url: "<?php echo site_url('admin/expert/edit_dvc') ?>/" + id,
+            url: "<?php echo site_url('admin/expert/edit_dmg') ?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data) {
 
-                $('[name="id_dvc"]').val(data.id_device);
-                $('[name="name_dvc"]').val(data.name_device);
+                $('[name="id_dmg"]').val(data.id_kerusakan);
+                $('[name="nama_dmg"]').val(data.nama_kerusakan);
+                $('[name="keterangan_dmg"]').val(data.deskripsi_kerusakan);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Device'); // Set title to Bootstrap modal title
-
-                $('#photo-preview').show(); // show photo preview modal
-
-                if (data.image) {
-                    $('#label-photo').text('Change Photo'); // label photo upload
-                    $('#photo-preview div').html('<img src="' + base_url + 'assets/images/product/' + data.image + '" class="img-responsive" style="height: 100px;">'); // show photo
-                    $('#photo-preview div').append('<br><input class="mt-2" type="checkbox" name="remove_photo" value="' + data.image + '"/> Remove photo when saving'); // remove photo
-
-                } else {
-                    $('#label-photo').text('Upload Photo'); // label photo upload
-                    $('#photo-preview div').text('(No photo)');
-                }
-
+                $('.modal-title').text('Edit Kerusakan'); // Set title to Bootstrap modal title
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -152,11 +140,11 @@
         });
     }
 
-    function delete_dvc(id) {
+    function delete_dmg(id) {
         if (confirm('Are you sure delete this data?')) {
             // ajax delete data to database
             $.ajax({
-                url: "<?php echo site_url('admin/expert/delete_dvc') ?>/" + id,
+                url: "<?php echo site_url('admin/expert/delete_dmg') ?>/" + id,
                 type: "POST",
                 dataType: "JSON",
                 success: function(data) {

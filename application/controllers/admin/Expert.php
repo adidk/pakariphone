@@ -461,4 +461,29 @@ class Expert extends CI_Controller
 
         echo json_encode(array("status" => TRUE));
     }
+
+    public function edit_dmg($id)
+    {
+        $data = $this->expert->getdmg_by_id($id);
+        echo json_encode($data);
+    }
+
+    public function update_dmg()
+    {
+        $this->_validatedamage();
+        $data = array(
+            "id_kerusakan"          => $this->input->post('id_dmg'),
+            "nama_kerusakan"        => $this->input->post('nama_dmg'),
+            "deskripsi_kerusakan"   => $this->input->post('keterangan_dmg'),
+        );
+
+        $this->expert->updatedmg(array('id_kerusakan' => $this->input->post('id_dmg')), $data);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function delete_dmg($id)
+    {
+        $this->expert->deletedmg_by_id($id);
+        echo json_encode(array("status" => TRUE));
+    }
 }
