@@ -144,6 +144,12 @@ class m_expert extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function dmg_lastid()
+    {
+        $this->db->from($this->devicedmg);
+        return $this->db->order_by('id_kerusakan', 'desc')->limit(1)->get()->row_array();
+    }
+
     function count_filtered_dvc()
     {
         $this->_get_datatablesdvc_query();

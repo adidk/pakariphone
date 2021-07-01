@@ -427,7 +427,9 @@ class Expert extends CI_Controller
     public function count_dmg()
     {
         $count = $this->expert->count_all_dmg();
-        $idnum = $count + 1;
+        $idlast = $this->expert->dmg_lastid();
+        $subid = substr($idlast['id_kerusakan'], 2);
+        $idnum = $subid + 1;
         if ($idnum < 10) {
             $number = "000" . $idnum;
         } else if ($idnum >= 10) {
@@ -442,7 +444,7 @@ class Expert extends CI_Controller
         $output = array(
             "id_dmg"    => $data
         );
-
+        // var_dump($output);
         echo json_encode($output);
     }
 
