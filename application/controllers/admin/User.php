@@ -14,6 +14,7 @@ class User extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_user', $data);
         $this->load->view('v_admin/v_a_footer');
+        $this->load->view('j_admin/j_cuser', $data);
     }
 
     public function facebook_user()
@@ -26,6 +27,7 @@ class User extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_user', $data);
         $this->load->view('v_admin/v_a_footer');
+        $this->load->view('j_admin/j_userfacebook', $data);
     }
 
     public function phone_user()
@@ -38,5 +40,6 @@ class User extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_user', $data);
         $this->load->view('v_admin/v_a_footer');
+        $this->load->view('j_admin/j_userphone', $data);
     }
 }

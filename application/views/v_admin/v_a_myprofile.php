@@ -33,12 +33,12 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="female" name="gender" class="custom-control-input">
-                            <label class="custom-control-label" for="female">Male</label>
+                            <input type="radio" id="female" name="gender" class="custom-control-input" value="female">
+                            <label class="custom-control-label" for="female">Female</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="male" name="gender" class="custom-control-input">
-                            <label class="custom-control-label" for="male">Female</label>
+                            <input type="radio" id="male" name="gender" class="custom-control-input" value="male">
+                            <label class="custom-control-label" for="male">Male</label>
                         </div>
                         <small id="name" class="form-text text-muted">Gender</small>
                     </div>

@@ -14,6 +14,7 @@ class Personalitation extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_myprofile', $data);
         $this->load->view('v_admin/v_a_footer', $data);
+        $this->load->view('j_admin/j_user', $data);
     }
 
     public function change_password()
@@ -26,6 +27,7 @@ class Personalitation extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_changepass', $data);
         $this->load->view('v_admin/v_a_footer', $data);
+        $this->load->view('j_admin/j_changepassword', $data);
     }
 
     public function deactive()
@@ -38,5 +40,6 @@ class Personalitation extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_deactive', $data);
         $this->load->view('v_admin/v_a_footer', $data);
+        $this->load->view('j_admin/j_deactive', $data);
     }
 }
