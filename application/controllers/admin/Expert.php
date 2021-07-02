@@ -59,8 +59,9 @@ class Expert extends CI_Controller
 
     public function count_dvc()
     {
-        $count = $this->expert->count_all_dvc();
-        $idnum = $count + 1;
+        $idlast = $this->expert->dvc_lastid();
+        $subid = substr($idlast['id_device'], 2);
+        $idnum = $subid + 1;
         if ($idnum < 10) {
             $number = "000" . $idnum;
         } else if ($idnum >= 10) {
@@ -319,8 +320,9 @@ class Expert extends CI_Controller
 
     public function count_gjl()
     {
-        $count = $this->expert->count_all_gjl();
-        $idnum = $count + 1;
+        $idlast = $this->expert->gjl_lastid();
+        $subid = substr($idlast['id_gejala'], 3);
+        $idnum = $subid + 1;
         if ($idnum < 10) {
             $number = "000" . $idnum;
         } else if ($idnum >= 10) {
@@ -426,7 +428,6 @@ class Expert extends CI_Controller
 
     public function count_dmg()
     {
-        $count = $this->expert->count_all_dmg();
         $idlast = $this->expert->dmg_lastid();
         $subid = substr($idlast['id_kerusakan'], 2);
         $idnum = $subid + 1;

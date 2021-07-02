@@ -144,6 +144,17 @@ class m_expert extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function dvc_lastid()
+    {
+        $this->db->from($this->device);
+        return $this->db->order_by('id_device', 'desc')->limit(1)->get()->row_array();
+    }
+
+    public function gjl_lastid()
+    {
+        $this->db->from($this->devicegjl);
+        return $this->db->order_by('id_gejala', 'desc')->limit(1)->get()->row_array();
+    }
     public function dmg_lastid()
     {
         $this->db->from($this->devicedmg);
