@@ -18,6 +18,21 @@ class m_expert extends CI_Model
     var $column_searchdmg = array('nama_kerusakan', 'id_kerusakan');
     var $orderdmg = array('id_kerusakan' => 'asc');
 
+    var $question = 'pertanyaan_kerusakan';
+    var $column_orderq = array(
+        'pertanyaan_kerusakan.id_pertanyaankerusakan',
+        'pertanyaan_kerusakan.id_gejala',
+        'kerusakan_device.nama_gejala',
+        'pertanyaan_kerusakan.pertanyaan',
+        null
+    );
+    var $column_searchq = array(
+        'pertanyaan_kerusakan.id_pertanyaankerusakan',
+        'pertanyaan_kerusakan.id_gejala',
+        'pertanyaan_kerusakan.pertanyaan'
+    );
+    var $orderq = array('pertanyaan_kerusakan.id_pertanyaankerusakan' => 'asc');
+
     public function __construct()
     {
         parent::__construct();
@@ -126,6 +141,41 @@ class m_expert extends CI_Model
         }
     }
 
+    private function _get_datatablesq_query()
+    {
+        $this->db->from($this->question);
+        $this->db->join($this->devicegjl, $this->devicegjl . '.id_gejala=' . $this->question . '.id_gejala');
+
+        $i = 0;
+
+        foreach ($this->column_searchq as $item) // loop column 
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_searchq) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_orderq[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->orderq)) {
+            $orderq = $this->orderq;
+            $this->db->order_by(key($orderq), $orderq[key($orderq)]);
+        }
+    }
+
     public function count_all_dvc()
     {
         $this->db->from($this->device);
@@ -141,6 +191,12 @@ class m_expert extends CI_Model
     public function count_all_dmg()
     {
         $this->db->from($this->devicedmg);
+        return $this->db->count_all_results();
+    }
+
+    public function count_all_q()
+    {
+        $this->db->from($this->question);
         return $this->db->count_all_results();
     }
 
@@ -178,6 +234,13 @@ class m_expert extends CI_Model
     function count_filtered_dmg()
     {
         $this->_get_datatablesdamage_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    function count_filtered_q()
+    {
+        $this->_get_datatablesq_query();
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -289,6 +352,15 @@ class m_expert extends CI_Model
     function get_datatables_damage()
     {
         $this->_get_datatablesdamage_query();
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function get_datatables_q()
+    {
+        $this->_get_datatablesq_query();
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();

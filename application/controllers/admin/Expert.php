@@ -202,6 +202,7 @@ class Expert extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_question', $data);
         $this->load->view('v_admin/v_a_footer');
+        $this->load->view('j_admin/j_question', $data);
     }
 
     private function _do_upload()
@@ -488,5 +489,67 @@ class Expert extends CI_Controller
     {
         $this->expert->deletedmg_by_id($id);
         echo json_encode(array("status" => TRUE));
+    }
+
+    // Pertanyaan
+
+    public function ajax_list_q()
+    {
+        $list = $this->expert->get_datatables_q();
+        $data = array();
+        $no = $_POST['start'];
+        $number = 1;
+        foreach ($list as $item) {
+            $no++;
+            $row = array();
+            $row[] = $number++;
+            $row[] = $item->id_pertanyaankerusakan;
+            $row[] = $item->id_gejala;
+            $row[] = $item->nama_gejala;
+            $row[] = $item->pertanyaan;
+            $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-pencil"></i></a>
+                  <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-trash"></i></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->expert->count_all_q(),
+            "recordsFiltered" => $this->expert->count_filtered_q(),
+            "data" => $data,
+        );
+        echo json_encode($output);
+    }
+
+    private function _validateq()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+
+        if ($this->input->post('id_dmg') == '') {
+            $data['inputerror'][] = 'id_dmg';
+            $data['error_string'][] = 'Id Kerusakan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($this->input->post('nama_dmg') == '') {
+            $data['inputerror'][] = 'nama_dmg';
+            $data['error_string'][] = 'Nama Kerusakan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($this->input->post('keterangan_dmg') == '') {
+            $data['inputerror'][] = 'keterangan_dmg';
+            $data['error_string'][] = 'Keterangan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($data['status'] === FALSE) {
+            echo json_encode($data);
+            exit();
+        }
     }
 }
