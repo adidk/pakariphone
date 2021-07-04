@@ -190,6 +190,7 @@ class Expert extends CI_Controller
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_rule', $data);
         $this->load->view('v_admin/v_a_footer');
+        $this->load->view('j_admin/j_rule', $data);
     }
 
     public function question()
@@ -197,6 +198,8 @@ class Expert extends CI_Controller
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Question";
         $data['url']            = "question";
+
+        $data['gejala']         = $this->expert->getgejala();
 
         $this->load->view('v_admin/v_a_header', $data);
         $this->load->view('v_admin/v_a_sidebar', $data);
@@ -499,6 +502,7 @@ class Expert extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         $number = 1;
+
         foreach ($list as $item) {
             $no++;
             $row = array();
@@ -522,6 +526,69 @@ class Expert extends CI_Controller
         echo json_encode($output);
     }
 
+    public function count_q()
+    {
+        $idlast = $this->expert->q_lastid();
+        $subid = substr($idlast['id_pertanyaankerusakan'], 2);
+        $idnum = $subid + 1;
+        if ($idnum < 10) {
+            $number = "000" . $idnum;
+        } else if ($idnum >= 10) {
+            $number = "00" . $idnum;
+        } else if ($idnum >= 100) {
+            $number = "0" . $idnum;
+        } else {
+            $number = $idnum;
+        }
+        $row[] = "PK" . $number;
+        $data[] = $row;
+        $output = array(
+            "id_q"    => $data
+        );
+        // var_dump($output);
+        echo json_encode($output);
+    }
+
+    public function add_q()
+    {
+        $this->_validateq();
+
+        $data = array(
+            "id_pertanyaankerusakan"    => $this->input->post('id_q'),
+            "id_gejala"                 => $this->input->post('id_g'),
+            "pertanyaan"                => $this->input->post('pertanyaan'),
+        );
+
+        $insert = $this->expert->saveq($data);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function edit_q($id)
+    {
+        $data = $this->expert->getq_by_id($id);
+        echo json_encode($data);
+    }
+
+    public function update_q()
+    {
+        $this->_validateq();
+        $data = array(
+            "id_pertanyaankerusakan"    => $this->input->post('id_q'),
+            "id_gejala"                 => $this->input->post('id_g'),
+            "pertanyaan"                => $this->input->post('pertanyaan'),
+        );
+
+        $this->expert->updateq(array('id_pertanyaankerusakan' => $this->input->post('id_q')), $data);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function delete_q($id)
+    {
+        $this->expert->deleteq_by_id($id);
+        echo json_encode(array("status" => TRUE));
+    }
+
     private function _validateq()
     {
         $data = array();
@@ -529,21 +596,21 @@ class Expert extends CI_Controller
         $data['inputerror'] = array();
         $data['status'] = TRUE;
 
-        if ($this->input->post('id_dmg') == '') {
-            $data['inputerror'][] = 'id_dmg';
-            $data['error_string'][] = 'Id Kerusakan diperlukan';
+        if ($this->input->post('id_q') == '') {
+            $data['inputerror'][] = 'id_q';
+            $data['error_string'][] = 'Id Pertanyaan diperlukan';
             $data['status'] = FALSE;
         }
 
-        if ($this->input->post('nama_dmg') == '') {
-            $data['inputerror'][] = 'nama_dmg';
-            $data['error_string'][] = 'Nama Kerusakan diperlukan';
+        if ($this->input->post('id_g') == '') {
+            $data['inputerror'][] = 'id_g';
+            $data['error_string'][] = 'Gejala Kerusakan diperlukan';
             $data['status'] = FALSE;
         }
 
-        if ($this->input->post('keterangan_dmg') == '') {
-            $data['inputerror'][] = 'keterangan_dmg';
-            $data['error_string'][] = 'Keterangan diperlukan';
+        if ($this->input->post('pertanyaan') == '') {
+            $data['inputerror'][] = 'pertanyaan';
+            $data['error_string'][] = 'Pertanyaan diperlukan';
             $data['status'] = FALSE;
         }
 
@@ -551,5 +618,34 @@ class Expert extends CI_Controller
             echo json_encode($data);
             exit();
         }
+    }
+
+    //Rule / aturan
+    public function ajax_list_r()
+    {
+        $list = $this->expert->get_datatables_r();
+        $data = array();
+        $no = $_POST['start'];
+        $number = 1;
+        foreach ($list as $item) {
+            $no++;
+            $row = array();
+            $row[] = $number++;
+            $row[] = $item->id_rule;
+            $row[] = $item->pertanyaan;
+            $row[] = $item->nama_kerusakan;
+            $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_r(' . "'" . $item->id_rule . "'" . ')"><i class="icon-pencil"></i></a>
+                  <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_r(' . "'" . $item->id_rule . "'" . ')"><i class="icon-trash"></i></a>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->expert->count_all_r(),
+            "recordsFiltered" => $this->expert->count_filtered_r(),
+            "data" => $data,
+        );
+        echo json_encode($output);
     }
 }

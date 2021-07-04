@@ -22,7 +22,7 @@ class m_expert extends CI_Model
     var $column_orderq = array(
         'pertanyaan_kerusakan.id_pertanyaankerusakan',
         'pertanyaan_kerusakan.id_gejala',
-        'kerusakan_device.nama_gejala',
+        'gejala_device.nama_gejala',
         'pertanyaan_kerusakan.pertanyaan',
         null
     );
@@ -32,6 +32,20 @@ class m_expert extends CI_Model
         'pertanyaan_kerusakan.pertanyaan'
     );
     var $orderq = array('pertanyaan_kerusakan.id_pertanyaankerusakan' => 'asc');
+
+    var $rule = 'rule_kerusakan';
+    var $column_orderr = array(
+        'rule_kerusakan.id_rule',
+        'pertanyaan_kerusakan.pertanyaan',
+        'kerusakan_device.nama_kerusakan',
+        null
+    );
+    var $column_searchr = array(
+        'rule_kerusakan.id_rule',
+        'pertanyaan_kerusakan.pertanyaan',
+        'kerusakan_device.nama_kerusakan'
+    );
+    var $orderr = array('rule_kerusakan.id_rule' => 'asc');
 
     public function __construct()
     {
@@ -176,6 +190,42 @@ class m_expert extends CI_Model
         }
     }
 
+    private function _get_datatablesr_query()
+    {
+        $this->db->from($this->rule);
+        $this->db->join($this->question, $this->question . '.id_pertanyaankerusakan=' . $this->rule . '.id_pertanyaankerusakan');
+        $this->db->join($this->devicedmg, $this->devicedmg . '.id_kerusakan=' . $this->rule . '.id_kerusakan');
+
+        $i = 0;
+
+        foreach ($this->column_searchr as $item) // loop column 
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_searchr) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_orderr[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->orderr)) {
+            $orderr = $this->orderr;
+            $this->db->order_by(key($orderr), $orderr[key($orderr)]);
+        }
+    }
+
     public function count_all_dvc()
     {
         $this->db->from($this->device);
@@ -200,6 +250,12 @@ class m_expert extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function count_all_r()
+    {
+        $this->db->from($this->rule);
+        return $this->db->count_all_results();
+    }
+
     public function dvc_lastid()
     {
         $this->db->from($this->device);
@@ -211,10 +267,17 @@ class m_expert extends CI_Model
         $this->db->from($this->devicegjl);
         return $this->db->order_by('id_gejala', 'desc')->limit(1)->get()->row_array();
     }
+
     public function dmg_lastid()
     {
         $this->db->from($this->devicedmg);
         return $this->db->order_by('id_kerusakan', 'desc')->limit(1)->get()->row_array();
+    }
+
+    public function q_lastid()
+    {
+        $this->db->from($this->question);
+        return $this->db->order_by('id_pertanyaankerusakan', 'desc')->limit(1)->get()->row_array();
     }
 
     function count_filtered_dvc()
@@ -245,6 +308,13 @@ class m_expert extends CI_Model
         return $query->num_rows();
     }
 
+    function count_filtered_r()
+    {
+        $this->_get_datatablesr_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
     function savedvc($data)
     {
         $this->db->insert($this->device, $data);
@@ -260,6 +330,12 @@ class m_expert extends CI_Model
     function savedmg($data)
     {
         $this->db->insert($this->devicedmg, $data);
+        return $this->db->insert_id();
+    }
+
+    function saveq($data)
+    {
+        $this->db->insert($this->question, $data);
         return $this->db->insert_id();
     }
 
@@ -280,6 +356,12 @@ class m_expert extends CI_Model
         return $this->db->affected_rows();
     }
 
+    public function updateq($where, $data)
+    {
+        $this->db->update($this->question, $data, $where);
+        return $this->db->affected_rows();
+    }
+
     public function deletedvc_by_id($id)
     {
         $this->db->where('id_device', $id);
@@ -295,6 +377,11 @@ class m_expert extends CI_Model
     {
         $this->db->where('id_kerusakan', $id);
         $this->db->delete($this->devicedmg);
+    }
+    public function deleteq_by_id($id)
+    {
+        $this->db->where('id_pertanyaankerusakan', $id);
+        $this->db->delete($this->question);
     }
 
 
@@ -333,6 +420,15 @@ class m_expert extends CI_Model
         return $query->row();
     }
 
+    public function getq_by_id($id)
+    {
+        $this->db->from($this->question);
+        $this->db->where('id_pertanyaankerusakan', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function get_alldvc()
     {
         $this->db->select();
@@ -349,6 +445,13 @@ class m_expert extends CI_Model
         return $query->result();
     }
 
+    public function getgejala()
+    {
+        $this->db->select('*');
+        $this->db->from($this->devicegjl);
+        return $this->db->get()->result_array();
+    }
+
     function get_datatables_damage()
     {
         $this->_get_datatablesdamage_query();
@@ -361,6 +464,15 @@ class m_expert extends CI_Model
     function get_datatables_q()
     {
         $this->_get_datatablesq_query();
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function get_datatables_r()
+    {
+        $this->_get_datatablesr_query();
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();

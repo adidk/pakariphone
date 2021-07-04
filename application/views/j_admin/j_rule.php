@@ -1,12 +1,12 @@
 <script type="text/javascript">
-    var save_method_question; //for save method string
-    var table_question;
+    var save_method_r; //for save method string
+    var table_r;
     var base_url = '<?php echo base_url(); ?>';
 
     $(document).ready(function() {
 
         //datatables
-        table_question = $('#question').DataTable({
+        table_r = $('#aturan').DataTable({
 
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -14,7 +14,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('admin/expert/ajax_list_q') ?>",
+                "url": "<?php echo site_url('admin/expert/ajax_list_r') ?>",
                 "type": "POST"
             },
 
@@ -92,7 +92,7 @@
     }
 
     function reload_table() {
-        table_question.ajax.reload(null, false); //reload datatable ajax 
+        table_r.ajax.reload(null, false); //reload datatable ajax 
     }
 
     function save_q() {
@@ -184,9 +184,9 @@
                             <div class="col-md-12">
                                 <select id="id_g" name="id_g" class="form-control">
                                     <option selected>Pilih</option>
-                                    <?php foreach ($gejala as $gjl) : ?>
+                                    <!-- <?php foreach ($gejala as $gjl) : ?>
                                         <option value="<?= $gjl['id_gejala']; ?>"><?= $gjl['nama_gejala'] ?></option>
-                                    <?php endforeach; ?>
+                                    <?php endforeach; ?> -->
                                 </select>
                                 <span class="help-block"></span>
                             </div>
@@ -226,11 +226,7 @@
 <script src="<?= base_url() ?>assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
 <script src="<?= base_url() ?>dist/js/pages/dashboards/dashboard1.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('#rule').DataTable();
-    });
-</script>
+
 
 
 </body>
