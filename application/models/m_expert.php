@@ -280,6 +280,12 @@ class m_expert extends CI_Model
         return $this->db->order_by('id_pertanyaankerusakan', 'desc')->limit(1)->get()->row_array();
     }
 
+    public function r_lastid()
+    {
+        $this->db->from($this->rule);
+        return $this->db->order_by('id_rule', 'desc')->limit(1)->get()->row_array();
+    }
+
     function count_filtered_dvc()
     {
         $this->_get_datatablesdvc_query();
@@ -339,6 +345,12 @@ class m_expert extends CI_Model
         return $this->db->insert_id();
     }
 
+    function saver($data)
+    {
+        $this->db->insert($this->rule, $data);
+        return $this->db->insert_id();
+    }
+
     public function update($where, $data)
     {
         $this->db->update($this->device, $data, $where);
@@ -361,6 +373,11 @@ class m_expert extends CI_Model
         $this->db->update($this->question, $data, $where);
         return $this->db->affected_rows();
     }
+    public function updater($where, $data)
+    {
+        $this->db->update($this->rule, $data, $where);
+        return $this->db->affected_rows();
+    }
 
     public function deletedvc_by_id($id)
     {
@@ -373,15 +390,23 @@ class m_expert extends CI_Model
         $this->db->where('id_gejala', $id);
         $this->db->delete($this->devicegjl);
     }
+
     public function deletedmg_by_id($id)
     {
         $this->db->where('id_kerusakan', $id);
         $this->db->delete($this->devicedmg);
     }
+
     public function deleteq_by_id($id)
     {
         $this->db->where('id_pertanyaankerusakan', $id);
         $this->db->delete($this->question);
+    }
+
+    public function deleter_by_id($id)
+    {
+        $this->db->where('id_rule', $id);
+        $this->db->delete($this->rule);
     }
 
 
@@ -428,6 +453,14 @@ class m_expert extends CI_Model
 
         return $query->row();
     }
+    public function getr_by_id($id)
+    {
+        $this->db->from($this->rule);
+        $this->db->where('id_rule', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
 
     public function get_alldvc()
     {
@@ -449,6 +482,18 @@ class m_expert extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($this->devicegjl);
+        return $this->db->get()->result_array();
+    }
+    public function getpertanyaan()
+    {
+        $this->db->select('*');
+        $this->db->from($this->question);
+        return $this->db->get()->result_array();
+    }
+    public function getkerusakan()
+    {
+        $this->db->select('*');
+        $this->db->from($this->devicedmg);
         return $this->db->get()->result_array();
     }
 

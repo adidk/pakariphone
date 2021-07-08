@@ -186,6 +186,10 @@ class Expert extends CI_Controller
         $data['tittle']         = "Rule";
         $data['url']            = "rule";
 
+        $data['pertanyaan']         = $this->expert->getpertanyaan();
+        $data['kerusakan']         = $this->expert->getkerusakan();
+
+
         $this->load->view('v_admin/v_a_header', $data);
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_rule', $data);
@@ -647,5 +651,100 @@ class Expert extends CI_Controller
             "data" => $data,
         );
         echo json_encode($output);
+    }
+
+    public function count_r()
+    {
+        $idlast = $this->expert->r_lastid();
+        $subid = substr($idlast['id_rule'], 2);
+        $idnum = $subid + 1;
+        if ($idnum < 10) {
+            $number = "000" . $idnum;
+        } else if ($idnum >= 10) {
+            $number = "00" . $idnum;
+        } else if ($idnum >= 100) {
+            $number = "0" . $idnum;
+        } else {
+            $number = $idnum;
+        }
+        $row[] = "RU" . $number;
+        $data[] = $row;
+        $output = array(
+            "id_r"    => $data
+        );
+
+        echo json_encode($output);
+    }
+
+    public function add_r()
+    {
+        $this->_validater();
+
+        $data = array(
+            "id_rule"                   => $this->input->post('id_r'),
+            "id_pertanyaankerusakan"    => $this->input->post('id_pk'),
+            "id_kerusakan"              => $this->input->post('id_kr'),
+        );
+
+        $insert = $this->expert->saver($data);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function edit_r($id)
+    {
+        $data = $this->expert->getr_by_id($id);
+        echo json_encode($data);
+    }
+
+    public function update_r()
+    {
+        $this->_validater();
+        $data = array(
+            "id_rule"                   => $this->input->post('id_r'),
+            "id_pertanyaankerusakan"    => $this->input->post('id_pk'),
+            "id_kerusakan"              => $this->input->post('id_kr'),
+        );
+
+        $this->expert->updater(array('id_rule' => $this->input->post('id_r')), $data);
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function delete_r($id)
+    {
+        $this->expert->deleter_by_id($id);
+        echo json_encode(array("status" => TRUE));
+    }
+
+
+    private function _validater()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+
+        if ($this->input->post('id_r') == '') {
+            $data['inputerror'][] = 'id_r';
+            $data['error_string'][] = 'Id Aturan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($this->input->post('id_pk') == '') {
+            $data['inputerror'][] = 'id_pk';
+            $data['error_string'][] = 'Pertanyaan Kerusakan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($this->input->post('id_kr') == '') {
+            $data['inputerror'][] = 'id_kr';
+            $data['error_string'][] = 'Kerusakan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($data['status'] === FALSE) {
+            echo json_encode($data);
+            exit();
+        }
     }
 }

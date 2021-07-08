@@ -36,27 +36,28 @@
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
         });
-        $("select").change(function() {
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
+        //bikin eror select
+        // $("select").change(function() {
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
 
     });
 
 
-    function add_q() {
-        save_method_question = 'add';
+    function add_r() {
+        save_method_r = 'add';
         $('#form')[0].reset(); // reset form on modals
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $.ajax({
-            url: "<?php echo site_url('admin/expert/count_q') ?>",
+            url: "<?php echo site_url('admin/expert/count_r') ?>",
             type: "GET",
             dataType: "JSON",
             success: function(data) {
-                $('[name="id_q"]').val(data.id_q);
+                $('[name="id_r"]').val(data.id_r);
                 $('#modal_form').modal('show'); // show bootstrap modal
-                $('.modal-title').text('Tambah Pertanyaan'); // Set Title to Bootstrap modal title
+                $('.modal-title').text('Tambah Aturan'); // Set Title to Bootstrap modal title
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error get data from ajax');
@@ -64,8 +65,8 @@
         });
     }
 
-    function edit_q(id) {
-        save_method_question = 'update';
+    function edit_r(id) {
+        save_method_r = 'update';
         $('#form')[0].reset(); // reset form on modals
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
@@ -73,16 +74,16 @@
 
         //Ajax Load data from ajax
         $.ajax({
-            url: "<?php echo site_url('admin/expert/edit_q') ?>/" + id,
+            url: "<?php echo site_url('admin/expert/edit_r') ?>/" + id,
             type: "GET",
             dataType: "JSON",
             success: function(data) {
 
-                $('[name="id_q"]').val(data.id_pertanyaankerusakan);
-                $('[name="id_g"]').val(data.id_gejala);
-                $('[name="pertanyaan"]').val(data.pertanyaan);
+                $('[name="id_r"]').val(data.id_rule);
+                $('[name="id_pk"]').val(data.id_pertanyaankerusakan);
+                $('[name="id_kr"]').val(data.id_kerusakan);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Pertanyaan'); // Set title to Bootstrap modal title
+                $('.modal-title').text('Edit Kerusakan'); // Set title to Bootstrap modal title
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -95,15 +96,15 @@
         table_r.ajax.reload(null, false); //reload datatable ajax 
     }
 
-    function save_q() {
+    function save_r() {
         $('#btnSave').text('saving...'); //change button text
         $('#btnSave').attr('disabled', true); //set button disable 
         var url;
 
-        if (save_method_question == 'add') {
-            url = "<?php echo site_url('admin/expert/add_q') ?>";
+        if (save_method_r == 'add') {
+            url = "<?php echo site_url('admin/expert/add_r') ?>";
         } else {
-            url = "<?php echo site_url('admin/expert/update_q') ?>";
+            url = "<?php echo site_url('admin/expert/update_r') ?>";
         }
 
         // ajax adding data to database
@@ -140,11 +141,11 @@
         });
     }
 
-    function delete_q(id) {
+    function delete_r(id) {
         if (confirm('Are you sure delete this data?')) {
             // ajax delete data to database
             $.ajax({
-                url: "<?php echo site_url('admin/expert/delete_q') ?>/" + id,
+                url: "<?php echo site_url('admin/expert/delete_r') ?>/" + id,
                 type: "POST",
                 dataType: "JSON",
                 success: function(data) {
@@ -161,6 +162,7 @@
     }
 </script>
 
+
 <!--modal device -->
 <div class="modal fade" id="modal_form" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -173,20 +175,20 @@
                 <form action="#" id="form" class="form-horizontal">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="control-label col-md-12">ID&nbspertanyaan</label>
+                            <label class="control-label col-md-12">ID&nbspAturan</label>
                             <div class="col-md-12">
-                                <input name="id_q" placeholder="ID Kerusakan" class="form-control" type="text" readonly>
+                                <input name="id_r" placeholder="ID Aturan" class="form-control" type="text" readonly>
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-12">Gejala</label>
+                            <label class="control-label col-md-12">Pertanyaan</label>
                             <div class="col-md-12">
-                                <select id="id_g" name="id_g" class="form-control">
+                                <select id="id_pk" name="id_pk" class="form-control">
                                     <option selected>Pilih</option>
-                                    <!-- <?php foreach ($gejala as $gjl) : ?>
-                                        <option value="<?= $gjl['id_gejala']; ?>"><?= $gjl['nama_gejala'] ?></option>
-                                    <?php endforeach; ?> -->
+                                    <?php foreach ($pertanyaan as $pk) : ?>
+                                        <option value="<?= $pk['id_pertanyaankerusakan']; ?>"><?= $pk['pertanyaan'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <span class="help-block"></span>
                             </div>
@@ -194,21 +196,44 @@
                         <div class="form-group">
                             <label class="control-label col-md-12">Pertanyaan</label>
                             <div class="col-md-12">
-                                <textarea name="pertanyaan" placeholder="Pertanyaan" class="form-control" rows="5"></textarea>
+                                <select id="pertanyaan" name="states[]" data-placeholder="Pilih beberapa pertanyaan" multiple="multiple" class="custom-select">
+                                    <?php foreach ($pertanyaan as $pk) : ?>
+                                        <option value="<?= $pk['id_pertanyaankerusakan']; ?>"><?= $pk['pertanyaan'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                                 <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Kerusakan</label>
+                            <div class="col-md-12">
+                                <select id="id_kr" name="id_kr" class="form-control">
+                                    <option selected>Pilih</option>
+                                    <?php foreach ($kerusakan as $kr) : ?>
+                                        <option value="<?= $kr['id_kerusakan']; ?>"><?= $kr['nama_kerusakan'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnSave" onclick="save_q()" class="btn btn-primary">Save</button>
+                <button type="button" id="btnSave" onclick="save_r()" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!--modal device -->
+
+<script src="<?= base_url() ?>assets/select2/dist/js/select2.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#pertanyaan').select2();
+    });
+</script>
 
 <!-- apps -->
 <script src="<?= base_url() ?>dist/js/app-style-switcher.js"></script>
@@ -225,6 +250,7 @@
 <script src="<?= base_url() ?>assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
 <script src="<?= base_url() ?>assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
 <script src="<?= base_url() ?>dist/js/pages/dashboards/dashboard1.min.js"></script>
+
 
 
 
