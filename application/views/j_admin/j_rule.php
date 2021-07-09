@@ -46,8 +46,13 @@
 
 
     function add_r() {
+
+        $('#id_pk').select2({
+            multiple: true,
+        });
         save_method_r = 'add';
         $('#form')[0].reset(); // reset form on modals
+        $("#id_pk").val('').trigger('change');
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $.ajax({
@@ -78,9 +83,17 @@
             type: "GET",
             dataType: "JSON",
             success: function(data) {
+                var pertanyaan = data.id_pertanyaankerusakan;
+                $result = JSON.stringify(data.id_pertanyaankerusakan);
+                $('#id_pk').select2({
+                    multiple: true,
+                });
+                console.log($result);
+                $rslt = $result.replace(/"/g, '');
+                $('#id_pk').val("[" + $rslt + "]").trigger('change');
+                console.log("[" + $rslt + "]");
 
                 $('[name="id_r"]').val(data.id_rule);
-                $('[name="id_pk"]').val(data.id_pertanyaankerusakan);
                 $('[name="id_kr"]').val(data.id_kerusakan);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Kerusakan'); // Set title to Bootstrap modal title
@@ -184,19 +197,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-12">Pertanyaan</label>
                             <div class="col-md-12">
-                                <select id="id_pk" name="id_pk" class="form-control">
-                                    <option selected>Pilih</option>
-                                    <?php foreach ($pertanyaan as $pk) : ?>
-                                        <option value="<?= $pk['id_pertanyaankerusakan']; ?>"><?= $pk['pertanyaan'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-12">Pertanyaan</label>
-                            <div class="col-md-12">
-                                <select id="pertanyaan" name="states[]" data-placeholder="Pilih beberapa pertanyaan" multiple="multiple" class="custom-select">
+                                <select id="id_pk" name="id_pk[]" data-placeholder="Pilih beberapa pertanyaan" multiple="multiple" class="custom-select">
                                     <?php foreach ($pertanyaan as $pk) : ?>
                                         <option value="<?= $pk['id_pertanyaankerusakan']; ?>"><?= $pk['pertanyaan'] ?></option>
                                     <?php endforeach; ?>
@@ -230,9 +231,7 @@
 <script src="<?= base_url() ?>assets/select2/dist/js/select2.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#pertanyaan').select2();
-    });
+
 </script>
 
 <!-- apps -->

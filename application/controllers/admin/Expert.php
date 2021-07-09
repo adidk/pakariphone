@@ -636,7 +636,7 @@ class Expert extends CI_Controller
             $row = array();
             $row[] = $number++;
             $row[] = $item->id_rule;
-            $row[] = $item->pertanyaan;
+            $row[] = $item->id_pertanyaankerusakan;
             $row[] = $item->nama_kerusakan;
             $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_r(' . "'" . $item->id_rule . "'" . ')"><i class="icon-pencil"></i></a>
                   <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_r(' . "'" . $item->id_rule . "'" . ')"><i class="icon-trash"></i></a>';
@@ -679,10 +679,13 @@ class Expert extends CI_Controller
     public function add_r()
     {
         $this->_validater();
-
+        $id_pk = $this->input->post('id_pk[]');
+        $pertanyaan = implode("', '", $id_pk);
+        $str = str_replace(array("\t", "\n"), "", $this->input->post('id_pk[]'));
+        $strjs = json_decode($str);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
-            "id_pertanyaankerusakan"    => $this->input->post('id_pk'),
+            "id_pertanyaankerusakan"    => ($strjs),
             "id_kerusakan"              => $this->input->post('id_kr'),
         );
 
@@ -730,8 +733,8 @@ class Expert extends CI_Controller
             $data['status'] = FALSE;
         }
 
-        if ($this->input->post('id_pk') == '') {
-            $data['inputerror'][] = 'id_pk';
+        if ($this->input->post('id_pk[]') == '') {
+            $data['inputerror'][] = 'id_pk[]';
             $data['error_string'][] = 'Pertanyaan Kerusakan diperlukan';
             $data['status'] = FALSE;
         }

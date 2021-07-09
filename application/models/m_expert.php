@@ -36,13 +36,11 @@ class m_expert extends CI_Model
     var $rule = 'rule_kerusakan';
     var $column_orderr = array(
         'rule_kerusakan.id_rule',
-        'pertanyaan_kerusakan.pertanyaan',
         'kerusakan_device.nama_kerusakan',
         null
     );
     var $column_searchr = array(
         'rule_kerusakan.id_rule',
-        'pertanyaan_kerusakan.pertanyaan',
         'kerusakan_device.nama_kerusakan'
     );
     var $orderr = array('rule_kerusakan.id_rule' => 'asc');
@@ -193,7 +191,6 @@ class m_expert extends CI_Model
     private function _get_datatablesr_query()
     {
         $this->db->from($this->rule);
-        $this->db->join($this->question, $this->question . '.id_pertanyaankerusakan=' . $this->rule . '.id_pertanyaankerusakan');
         $this->db->join($this->devicedmg, $this->devicedmg . '.id_kerusakan=' . $this->rule . '.id_kerusakan');
 
         $i = 0;
