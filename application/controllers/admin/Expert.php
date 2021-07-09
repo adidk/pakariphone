@@ -680,12 +680,10 @@ class Expert extends CI_Controller
     {
         $this->_validater();
         $id_pk = $this->input->post('id_pk[]');
-        $pertanyaan = implode("', '", $id_pk);
-        $str = str_replace(array("\t", "\n"), "", $this->input->post('id_pk[]'));
-        $strjs = json_decode($str);
+        $pertanyaan = implode(", ", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
-            "id_pertanyaankerusakan"    => ($strjs),
+            "id_pertanyaankerusakan"    => ($pertanyaan),
             "id_kerusakan"              => $this->input->post('id_kr'),
         );
 
@@ -697,15 +695,23 @@ class Expert extends CI_Controller
     public function edit_r($id)
     {
         $data = $this->expert->getr_by_id($id);
+        $pertanyaan = explode(", ", $data['id_pertanyaankerusakan']);
+        $data = array(
+            'id_rule' => $data['id_rule'],
+            'id_pertanyaan' => $pertanyaan,
+            'id_kerusakan' => $data['id_kerusakan']
+        );
         echo json_encode($data);
     }
 
     public function update_r()
     {
         $this->_validater();
+        $id_pk = $this->input->post('id_pk[]');
+        $pertanyaan = implode(", ", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
-            "id_pertanyaankerusakan"    => $this->input->post('id_pk'),
+            "id_pertanyaankerusakan"    => $pertanyaan,
             "id_kerusakan"              => $this->input->post('id_kr'),
         );
 
@@ -739,7 +745,7 @@ class Expert extends CI_Controller
             $data['status'] = FALSE;
         }
 
-        if ($this->input->post('id_kr') == '') {
+        if ($this->input->post('id_kr') == ' ') {
             $data['inputerror'][] = 'id_kr';
             $data['error_string'][] = 'Kerusakan diperlukan';
             $data['status'] = FALSE;

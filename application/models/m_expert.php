@@ -456,7 +456,7 @@ class m_expert extends CI_Model
         $this->db->where('id_rule', $id);
         $query = $this->db->get();
 
-        return $query->row();
+        return $query->row_array();
     }
 
     public function get_alldvc()

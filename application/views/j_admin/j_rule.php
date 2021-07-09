@@ -83,20 +83,17 @@
             type: "GET",
             dataType: "JSON",
             success: function(data) {
-                var pertanyaan = data.id_pertanyaankerusakan;
-                $result = JSON.stringify(data.id_pertanyaankerusakan);
+                const pertanyaan = data.id_pertanyaan;
                 $('#id_pk').select2({
                     multiple: true,
                 });
-                console.log($result);
-                $rslt = $result.replace(/"/g, '');
-                $('#id_pk').val("[" + $rslt + "]").trigger('change');
-                console.log("[" + $rslt + "]");
+                console.log(pertanyaan);
+                $('#id_pk').val(pertanyaan).trigger('change');
 
                 $('[name="id_r"]').val(data.id_rule);
                 $('[name="id_kr"]').val(data.id_kerusakan);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Kerusakan'); // Set title to Bootstrap modal title
+                $('.modal-title').text('Edit Rule'); // Set title to Bootstrap modal title
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -209,7 +206,7 @@
                             <label class="control-label col-md-12">Kerusakan</label>
                             <div class="col-md-12">
                                 <select id="id_kr" name="id_kr" class="form-control">
-                                    <option selected>Pilih</option>
+                                    <option value=" " selected>Pilih</option>
                                     <?php foreach ($kerusakan as $kr) : ?>
                                         <option value="<?= $kr['id_kerusakan']; ?>"><?= $kr['nama_kerusakan'] ?></option>
                                     <?php endforeach; ?>
