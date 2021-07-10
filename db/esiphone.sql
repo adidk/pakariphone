@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Jul 2021 pada 10.00
+-- Waktu pembuatan: 10 Jul 2021 pada 09.37
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -145,17 +145,8 @@ CREATE TABLE `rule_kerusakan` (
 --
 
 INSERT INTO `rule_kerusakan` (`id_rule`, `id_pertanyaankerusakan`, `id_kerusakan`) VALUES
-('RU0002', '[\'PK0001\']', 'KR0004'),
-('RU0003', 'PK0003', 'KR0003'),
-('RU0004', 'PK0003,PK0004', 'KR0003'),
-('RU0005', 'PK0003\", \"PK0004', 'KR0001'),
-('RU0006', '\'PK0003\', \'PK0004\'', 'KR0003'),
-('RU0007', '[\'PK0004\', \'PK0005\']', 'KR0001'),
-('RU0008', '[\'PK0003\', \'PK0004\']', 'KR0003'),
-('RU0009', '[\'PK0001\', \'PK0003\', \'PK0004\', \'PK0005\']', 'KR0001'),
-('RU0010', '[\'PK0003\', \'PK0004\']', 'KR0001'),
-('RU0011', '[\'PK0001\', \'PK0003\', \'PK0004\']', 'KR0001'),
-('RU0012', 'PK0001\", \"PK0003', 'KR0001');
+('RU0009', 'PK0003, PK0004, PK0005', 'KR0001'),
+('RU0010', 'PK0001, PK0003, PK0004, PK0005', 'KR0003');
 
 -- --------------------------------------------------------
 
