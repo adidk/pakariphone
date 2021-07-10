@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Apakah hanpone anda menyala ?</h3>
@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
