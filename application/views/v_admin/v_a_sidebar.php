@@ -56,7 +56,7 @@
                      <a class="sidebar-link sidebar-link" href="<?= base_url() ?>admin/expert/symtoms" aria-expanded="false"><i class=" icon-screen-smartphone"></i><span class="hide-menu">Symptoms Table</span></a>
                  </li>
                  <li class="sidebar-item">
-                     <a class="sidebar-link sidebar-link" href="#" aria-expanded="false"><i class="icon-question"></i><span class="hide-menu">Try To Ask</span></a>
+                     <a class="sidebar-link sidebar-link" href="<?= base_url() ?>admin/ask" aria-expanded="false"><i class="icon-question"></i><span class="hide-menu">Try To Ask</span></a>
                  </li>
              </ul>
          </nav>

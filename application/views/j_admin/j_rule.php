@@ -225,11 +225,8 @@
 </div><!-- /.modal -->
 <!--modal device -->
 
+<!-- select2 js -->
 <script src="<?= base_url() ?>assets/select2/dist/js/select2.min.js"></script>
-
-<script type="text/javascript">
-
-</script>
 
 <!-- apps -->
 <script src="<?= base_url() ?>dist/js/app-style-switcher.js"></script>
