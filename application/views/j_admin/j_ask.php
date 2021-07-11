@@ -28,15 +28,15 @@
 
 
         //set input/textarea/select event when change value, remove class error and remove text help block 
-        $("input").change(function() {
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
+        // $("input").change(function() {
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
         $("textarea").change(function() {
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
         });
-        //bikin eror select
+        // bikin eror select
         // $("select").change(function() {
         //     $(this).parent().parent().removeClass('has-error');
         //     $(this).next().empty();

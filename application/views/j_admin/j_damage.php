@@ -80,6 +80,7 @@
 
                 $('[name="id_dmg"]').val(data.id_kerusakan);
                 $('[name="nama_dmg"]').val(data.nama_kerusakan);
+                $('[name="nama_kns"]').val(data.nama_konsultasi);
                 $('[name="keterangan_dmg"]').val(data.deskripsi_kerusakan);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Edit Kerusakan'); // Set title to Bootstrap modal title
@@ -183,6 +184,13 @@
                             <label class="control-label col-md-12">Nama&nbspKerusakan</label>
                             <div class="col-md-12">
                                 <input name="nama_dmg" placeholder="Nama Kerusakan" class="form-control" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Nama&nbspKonsultasi</label>
+                            <div class="col-md-12">
+                                <input name="nama_kns" placeholder="Nama Konsultasi" class="form-control" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>

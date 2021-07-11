@@ -16,6 +16,9 @@ class Ask extends CI_Controller
         $data['tittle']         = "Ask";
         $data['url']            = "Ask";
 
+        $data['cekkerusakan'] = $this->ask->getdamage();
+        $data['device'] = $this->ask->getdevice();
+
         $this->load->view('v_admin/v_a_header', $data);
         $this->load->view('v_admin/v_a_sidebar', $data);
         $this->load->view('v_admin/v_a_ask', $data);

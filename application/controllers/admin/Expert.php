@@ -382,12 +382,15 @@ class Expert extends CI_Controller
         $no = $_POST['start'];
         $number = 1;
         foreach ($list as $item) {
+            $kalimat = $item->deskripsi_kerusakan;
+            $deskripsi    = substr($kalimat, 0, 50);
             $no++;
             $row = array();
             $row[] = $number++;
             $row[] = $item->id_kerusakan;
             $row[] = $item->nama_kerusakan;
-            $row[] = $item->deskripsi_kerusakan;
+            $row[] = $item->nama_konsultasi;
+            $row[] = $deskripsi . '....';
             $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_dmg(' . "'" . $item->id_kerusakan . "'" . ')"><i class="icon-pencil"></i></a>
                   <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_dmg(' . "'" . $item->id_kerusakan . "'" . ')"><i class="icon-trash"></i></a>';
 
@@ -419,6 +422,12 @@ class Expert extends CI_Controller
         if ($this->input->post('nama_dmg') == '') {
             $data['inputerror'][] = 'nama_dmg';
             $data['error_string'][] = 'Nama Kerusakan diperlukan';
+            $data['status'] = FALSE;
+        }
+
+        if ($this->input->post('nama_kns') == '') {
+            $data['inputerror'][] = 'nama_kns';
+            $data['error_string'][] = 'Nama Konsultasi diperlukan';
             $data['status'] = FALSE;
         }
 
@@ -465,6 +474,7 @@ class Expert extends CI_Controller
         $data = array(
             "id_kerusakan"          => $this->input->post('id_dmg'),
             "nama_kerusakan"        => $this->input->post('nama_dmg'),
+            "nama_konsultasi"       => $this->input->post('nama_kns'),
             "deskripsi_kerusakan"   => $this->input->post('keterangan_dmg'),
         );
 
@@ -485,6 +495,7 @@ class Expert extends CI_Controller
         $data = array(
             "id_kerusakan"          => $this->input->post('id_dmg'),
             "nama_kerusakan"        => $this->input->post('nama_dmg'),
+            "nama_konsultasi"       => $this->input->post('nama_kns'),
             "deskripsi_kerusakan"   => $this->input->post('keterangan_dmg'),
         );
 
