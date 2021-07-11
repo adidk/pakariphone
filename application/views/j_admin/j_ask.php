@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    var save_method_r; //for save method string
-    var table_r;
+    var save_method; //for save method string
+    var table;
     var base_url = '<?php echo base_url(); ?>';
 
     $(document).ready(function() {
@@ -50,7 +50,7 @@
         $('#id_pk').select2({
             multiple: true,
         });
-        save_method_r = 'add';
+        save_method = 'add';
         $('#form')[0].reset(); // reset form on modals
         $("#id_pk").val('').trigger('change');
         $('.form-group').removeClass('has-error'); // clear error class
@@ -71,7 +71,7 @@
     }
 
     function edit_r(id) {
-        save_method_r = 'update';
+        save_method = 'update';
         $('#form')[0].reset(); // reset form on modals
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
@@ -111,7 +111,7 @@
         $('#btnSave').attr('disabled', true); //set button disable 
         var url;
 
-        if (save_method_r == 'add') {
+        if (save_method == 'add') {
             url = "<?php echo site_url('admin/expert/add_r') ?>";
         } else {
             url = "<?php echo site_url('admin/expert/update_r') ?>";
