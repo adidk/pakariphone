@@ -24,10 +24,10 @@ class Auth extends CI_Controller
             $fbUser = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
             $userData['email']        = !empty($fbUser['email']) ? $fbUser['email'] : '';
 
-            // $role_id = $this->db->get_where('users', array('email' =>  $userData['email']))->row_array();
-            // if ($role = 1) {
-            //     redirect(['admin/Dashboard']);
-            // } 
+                $role_id = $this->db->get_where('users', array('email' =>  $userData['email']))->row_array();
+                if ($role = 1) {
+                    redirect(['admin/Dashboard']);
+                } 
             // Preparing data for database insertion 
             $userData['oauth_provider'] = 'facebook';
             $userData['oauth_uid']    = !empty($fbUser['id']) ? $fbUser['id'] : '';;
