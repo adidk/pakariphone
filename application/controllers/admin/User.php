@@ -3,9 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
+    function __construct()
+    {
+        parent::__construct();
+
+        // Load facebook oauth library 
+        $this->load->library('facebook');
+
+        // Load user model 
+    }
+
 
     public function index()
     {
+        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Users Data";
         $data['url']            = "user";
@@ -19,6 +31,8 @@ class User extends CI_Controller
 
     public function facebook_user()
     {
+        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Facebook Users";
         $data['url']            = "facebook_user";
@@ -32,6 +46,8 @@ class User extends CI_Controller
 
     public function phone_user()
     {
+        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Phone Number Users";
         $data['url']            = "phone_user";

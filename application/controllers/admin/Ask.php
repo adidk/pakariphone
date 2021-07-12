@@ -8,10 +8,14 @@ class Ask extends CI_Controller
         parent::__construct();
 
         $this->load->model('m_ask', 'ask');
+        $this->load->library('facebook');
     }
+   
 
     public function index()
     {
+        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+
         $data['breadcrumtext']  = "Ask Question";
         $data['tittle']         = "Ask";
         $data['url']            = "Ask";

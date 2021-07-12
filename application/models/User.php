@@ -44,5 +44,9 @@ class User extends CI_Model {
         return $userID?$userID:FALSE;
     }
 
+    public function UserOnline()
+    {
+        # code...
+    }
     
 }
