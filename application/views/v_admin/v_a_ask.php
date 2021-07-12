@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-lg-5">
-        <div class="card">
-            <div class="card-body">
+        <div class="card animate__animated animate__slideInUp">
+            <div class="card-body ">
                 <div class="form-group">
-                    <label class="control-label col-md-12 h4 font-weight-bold">Pilih Kemungkinan Kerusakan!</label>
+                    <label class="control-label col-md-12 text-black font-weight-bold">Pilih Kemungkinan Kerusakan!</label>
                     <div class="col-md-12">
                         <?php foreach ($cekkerusakan as $cek) : ?>
                             <div class="custom-control custom-radio mt-1 mb-1">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-12 font-weight-bold">Pilih Device Anda</label>
+                    <label class="control-label col-md-12 text-black font-weight-bold ">Pilih Device Anda</label>
                     <div class="col-md-12">
                         <select id="id_g" name="id_g" class="form-control">
                             <option value="" selected>Pilih</option>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card animate__animated animate__slideInUp">
             <div class="card-body">
                 <h3 class="card-title">Apakah hanpone anda menyala ?</h3>
                 <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-primary"><i class="fa fa-check"></i> Iya</a>
