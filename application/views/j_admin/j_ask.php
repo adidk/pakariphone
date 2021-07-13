@@ -28,6 +28,8 @@
 
         $('#pertanyaan-card').hide();
 
+        $('#text-askcookies').load("<?php echo base_url() ?>admin/ask/load_ask");
+
         //set input/textarea/select event when change value, remove class error and remove text help block 
         // $("#id_dvc").change(function() {
         //     $(this).parent().parent().removeClass('has-error');
@@ -43,7 +45,6 @@
         });
 
     });
-
 
     function add_r() {
 
@@ -188,9 +189,14 @@
             dataType: "JSON",
             success: function(data) {
                 if (data.status) {
-                    $('#kemungkinan').hide();
-                    $('#pertanyaan-card').addClass('animate__animated  animate__fadeInUp');
-                    $('#pertanyaan-card').show();
+                    $('#kemungkinan').addClass('animate__animated  animate__fadeOutUp');
+                    setTimeout(function() {
+                        $('#kemungkinan').hide();
+                    }, 900);
+                    setTimeout(function() {
+                        $('#pertanyaan-card').addClass('animate__animated  animate__fadeInUp');
+                        $('#pertanyaan-card').show();
+                    }, 900);
 
                 } else {
                     for (var i = 0; i < data.inputerror.length; i++) {
@@ -198,6 +204,8 @@
                         $('[name="' + data.inputerror[i] + '"]').next().text(data.error_string[i]); //select span help-block class set text error string
                     }
                 }
+
+                $('#text-askcookies').load("<?php echo base_url() ?>admin/ask/load_ask");
 
 
             },

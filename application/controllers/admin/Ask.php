@@ -28,6 +28,7 @@ class Ask extends CI_Controller
     public function save_device()
     {
         $this->_validatesavedvc();
+        delete_cookie('ask');
         $datacookie = $this->input->post('id_dvc') . ', ' . $this->input->post('id_kemungkinan') . ', ' . time();
         $cookie = array(
             'name'              => 'ask',
@@ -39,6 +40,32 @@ class Ask extends CI_Controller
         $this->input->set_cookie($cookie);
 
         echo json_encode(array("status" => TRUE));
+    }
+
+    public function load_ask()
+    {
+        echo $this->_tampilaskcookie();
+    }
+
+    private function _tampilaskcookie()
+    {
+        if (get_cookie('ask') != NULL) {
+            $cookie = get_cookie('ask');
+
+            $data_cookie_ask = explode(", ", $cookie);
+
+            $data['deviceid'] = $this->ask->getdeviid($data_cookie_ask[0]);
+            $data['kemungkinanid'] = $this->ask->getdamageid($data_cookie_ask[1]);
+            $output = '';
+            $output .= '<h5>Kemungkinan Kendala : ' .  $data['kemungkinanid']['nama_konsultasi'] . '</h5>
+            <h5>Tipe Device : ' . $data['deviceid']['name_device']  . '</h5>';
+            return $output;
+        } else {
+            $output = '';
+            $output .= '<h5>Kemungkinan Kendala : - </h5>
+        <h5>Tipe Device : - </h5>';
+            return $output;
+        }
     }
 
     private function _validatesavedvc()

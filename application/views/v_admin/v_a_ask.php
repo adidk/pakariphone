@@ -44,6 +44,9 @@
     <div class="col-lg-7">
         <div class="card">
             <div class="card-body">
+                <p id="text-askcookies">
+                
+                </p>
                 <div class="table-responsive">
                     <table id="ask" class="table table-striped table-bordered no-wrap">
                         <thead>
