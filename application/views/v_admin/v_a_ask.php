@@ -1,37 +1,39 @@
 <div class="row">
     <div class="col-lg-5">
-        <div class="card animate__animated animate__slideInUp">
+        <div id="kemungkinan" class="card animate__animated  animate__fadeInUp">
             <div class="card-body ">
-                <div class="form-group">
-                    <label class="control-label col-md-12 text-black font-weight-bold">Pilih Kemungkinan Kerusakan!</label>
-                    <div class="col-md-12">
-                        <?php foreach ($cekkerusakan as $cek) : ?>
-                            <div class="custom-control custom-radio mt-1 mb-1">
-                                <input type="radio" id="<?= $cek['id_kerusakan'] ?>" name="kerusakancek" class="custom-control-input" value="<?= $cek['id_kerusakan'] ?>">
-                                <label class="custom-control-label" for="<?= $cek['id_kerusakan'] ?>"><?= $cek['nama_konsultasi'] ?></label>
-                            </div>
-                            <span class="help-block"></span>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-12 text-black font-weight-bold ">Pilih Device Anda</label>
-                    <div class="col-md-12">
-                        <select id="id_g" name="id_g" class="form-control">
-                            <option value="" selected>Pilih</option>
-                            <?php foreach ($device as $dvc) : ?>
-                                <option value="<?= $dvc['id_device']; ?>"><?= $dvc['name_device'] ?></option>
+                <form action="#" id="form-kemungkinan">
+                    <div class="form-group">
+                        <label class="control-label col-md-12 text-black font-weight-bold">Pilih Kemungkinan Kerusakan!</label>
+                        <div class="col-md-12">
+                            <?php foreach ($cekkerusakan as $cek) : ?>
+                                <div class="custom-control custom-radio mt-1 mb-1">
+                                    <input type="radio" id="<?= $cek['id_kerusakan'] ?>" name="id_kemungkinan" class="custom-control-input" value="<?= $cek['id_kerusakan'] ?>">
+                                    <label class="custom-control-label" for="<?= $cek['id_kerusakan'] ?>"><?= $cek['nama_konsultasi'] ?></label>
+                                </div>
                             <?php endforeach; ?>
-                        </select>
-                        <span class="help-block"></span>
+                            <span class="help-block" id="eror_kemungkinan" style="display: none">Pilih salah satu kemungkinan</span>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-12 text-black font-weight-bold ">Pilih Device Anda</label>
+                        <div class="col-md-12">
+                            <select id="id_dvc" name="id_dvc" class="form-control">
+                                <option value="" disabled selected>Pilih</option>
+                                <?php foreach ($device as $dvc) : ?>
+                                    <option value="<?= $dvc['id_device']; ?>"><?= $dvc['name_device'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </form>
                 <div class="col-md-12">
-                    <button onclick="submit()" type="button" class="btn btn-rounded btn-primary">Pilih</button>
+                    <button type="submit" onclick="simpan()" class="btn btn-rounded btn-primary">Pilih</button>
                 </div>
             </div>
         </div>
-        <div class="card animate__animated animate__slideInUp">
+        <div id="pertanyaan-card" class="card">
             <div class="card-body">
                 <h3 class="card-title">Apakah hanpone anda menyala ?</h3>
                 <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-primary"><i class="fa fa-check"></i> Iya</a>

@@ -26,21 +26,21 @@
 
         });
 
+        $('#pertanyaan-card').hide();
 
         //set input/textarea/select event when change value, remove class error and remove text help block 
-        // $("input").change(function() {
+        // $("#id_dvc").change(function() {
         //     $(this).parent().parent().removeClass('has-error');
         //     $(this).next().empty();
         // });
-        $("textarea").change(function() {
+        // $("textarea").change(function() {
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
+        $("#id_dvc").change(function() {
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
         });
-        // bikin eror select
-        // $("select").change(function() {
-        //     $(this).parent().parent().removeClass('has-error');
-        //     $(this).next().empty();
-        // });
 
     });
 
@@ -170,7 +170,46 @@
 
         }
     }
+
+    function simpan() {
+        var formData = new FormData($('#form-kemungkinan')[0]);
+
+        //Set the Valid Flag to True if one RadioButton from the Group of RadioButtons is checked.
+        var valkemungkinan = $("input[name=id_kemungkinan]").is(":checked");
+        //Display error message if no RadioButton is checked.
+        $("#eror_kemungkinan")[0].style.display = valkemungkinan ? "none" : "block";
+
+        $.ajax({
+            url: "<?php echo site_url('admin/ask/save_device') ?>",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "JSON",
+            success: function(data) {
+                if (data.status) {
+                    $('#kemungkinan').hide();
+                    $('#pertanyaan-card').addClass('animate__animated  animate__fadeInUp');
+                    $('#pertanyaan-card').show();
+
+                } else {
+                    for (var i = 0; i < data.inputerror.length; i++) {
+                        $('[name="' + data.inputerror[i] + '"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="' + data.inputerror[i] + '"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                }
+
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error simpan data');
+
+            }
+        })
+
+    }
 </script>
+
 
 <!-- apps -->
 <script src="<?= base_url() ?>dist/js/app-style-switcher.js"></script>
