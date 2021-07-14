@@ -22,36 +22,39 @@ class Auth extends CI_Controller
         if ($this->facebook->is_authenticated()) {
             // Get user info from facebook 
             $fbUser = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-            $userData['email']        = !empty($fbUser['email']) ? $fbUser['email'] : '';
-
-                $role_id = $this->db->get_where('users', array('email' =>  $userData['email']))->row_array();
-                if ($role = 1) {
-                    redirect(['admin/Dashboard']);
-                } 
-            // Preparing data for database insertion 
-            $userData['oauth_provider'] = 'facebook';
-            $userData['oauth_uid']    = !empty($fbUser['id']) ? $fbUser['id'] : '';;
-            $userData['first_name']    = !empty($fbUser['first_name']) ? $fbUser['first_name'] : '';
-            $userData['last_name']    = !empty($fbUser['last_name']) ? $fbUser['last_name'] : '';
-            $userData['gender']        = !empty($fbUser['gender']) ? $fbUser['gender'] : '';
-            $userData['picture']    = !empty($fbUser['picture']['data']['url']) ? $fbUser['picture']['data']['url'] : '';
-            $userData['link']        = !empty($fbUser['link']) ? $fbUser['link'] : 'https://www.facebook.com/';
-
-            // Insert or update user data to the database 
-            $userID = $this->user->checkUser($userData);
-
-            // Check user data insert or update status 
-            if (!empty($userID)) {
-                $data['userData'] = $userData;
-
-                // Store the user profile info into session 
-                $this->session->set_userdata('userData', $userData);
+            $useronline = $this->db->get_where('users', array('email' =>  $fbUser['email']))->row_array();
+            
+            if ( $useronline['role_id'] == 1) {
+                redirect(['admin/Dashboard']);
             } else {
-                $data['userData'] = array();
-            }
 
-            // Facebook logout URL 
-            $data['logoutURL'] = $this->facebook->logout_url();
+
+                // Preparing data for database insertion 
+                $userData['email']        = !empty($fbUser['email']) ? $fbUser['email'] : '';
+                $userData['oauth_provider'] = 'facebook';
+                $userData['oauth_uid']    = !empty($fbUser['id']) ? $fbUser['id'] : '';;
+                $userData['first_name']    = !empty($fbUser['first_name']) ? $fbUser['first_name'] : '';
+                $userData['last_name']    = !empty($fbUser['last_name']) ? $fbUser['last_name'] : '';
+                $userData['gender']        = !empty($fbUser['gender']) ? $fbUser['gender'] : '';
+                $userData['picture']    = !empty($fbUser['picture']['data']['url']) ? $fbUser['picture']['data']['url'] : '';
+                $userData['link']        = !empty($fbUser['link']) ? $fbUser['link'] : 'https://www.facebook.com/';
+
+                // Insert or update user data to the database 
+                $userID = $this->user->checkUser($userData);
+
+                // Check user data insert or update status 
+                if (!empty($userID)) {
+                    $data['userData'] = $userData;
+
+                    // Store the user profile info into session 
+                    $this->session->set_userdata('userData', $userData);
+                } else {
+                    $data['userData'] = array();
+                }
+
+                // Facebook logout URL 
+                $data['logoutURL'] = $this->facebook->logout_url();
+            }
         } else {
             // Facebook authentication url 
             $data['authURL'] =  $this->facebook->login_url();

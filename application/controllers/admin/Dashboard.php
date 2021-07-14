@@ -15,7 +15,8 @@ class Dashboard extends CI_Controller
     }
     public function index()
     {
-        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
         
         $data['breadcrumtext']  = "Hello Admin! :)";
         $data['tittle']     = "Dashboard";

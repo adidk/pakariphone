@@ -16,7 +16,9 @@ class User extends CI_Controller
 
     public function index()
     {
-        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Users Data";
@@ -31,7 +33,8 @@ class User extends CI_Controller
 
     public function facebook_user()
     {
-        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Facebook Users";
@@ -46,7 +49,8 @@ class User extends CI_Controller
 
     public function phone_user()
     {
-        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Users";
         $data['tittle']         = "Phone Number Users";
