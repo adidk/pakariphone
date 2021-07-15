@@ -32,7 +32,10 @@ class Personalitation extends CI_Controller
             $data['perempuan'] = 'unchecked';
         }
 
-        $this->form_validation->set_rules('phone', 'phone', 'required|min_length[13]|max_length[15]');
+        $this->form_validation->set_rules('phone', 'phone', 'required|min_length[0]|max_length[14]', [
+            'min_length'   =>  'Minimal 10',
+            'min_length'   =>  'Maximal 10 nomor'
+        ]);
 
         if ($this->form_validation->run() == false) {
             $this->load->view('v_admin/v_a_header', $data);
@@ -71,7 +74,7 @@ class Personalitation extends CI_Controller
         ]);
         $this->form_validation->set_rules(
             'password1',
-            'Password Confirmation',
+            'Ulangi Password',
             'required|matches[password]',
             [
                 'matches'   =>  'Password tidak sama'

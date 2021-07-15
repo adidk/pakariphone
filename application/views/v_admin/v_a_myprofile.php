@@ -44,8 +44,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="phone" aria-describedby="name" placeholder="Phone Number" value="<?= $user['phone'] ?>">
+                        <input type="number" class="form-control" name="phone" aria-describedby="name" placeholder="Phone Number" value="<?= $user['phone'] ?>">
+                        <?php echo form_error('phone', '<small class="text-danger pl-3">', '</small>'); ?>
                         <small id="name" class="form-text text-muted">Phone Number</small>
+
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="nametext" aria-describedby="name" placeholder="Email" value="<?= $user['email'] ?>" readonly>
