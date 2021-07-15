@@ -33,19 +33,18 @@
                 </div>
             </div>
         </div>
-        <div id="pertanyaan-card" class="card">
-            <div class="card-body">
-                <h3 class="card-title">Apakah hanpone anda menyala ?</h3>
-                <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-primary"><i class="fa fa-check"></i> Iya</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger"><i class="fa fa-times"></i> Tidak</a>
-            </div>
+        <div id="pertanyaan-card" class="card animate__animated  animate__fadeInUp">
+            
+        </div>
+        <div id="jawaban-kerusakan" class="card animate__animated  animate__fadeInUp">
+            
         </div>
     </div>
     <div class="col-lg-7">
         <div class="card">
             <div class="card-body">
                 <p id="text-askcookies">
-                
+
                 </p>
                 <div class="table-responsive">
                     <table id="ask" class="table table-striped table-bordered no-wrap">

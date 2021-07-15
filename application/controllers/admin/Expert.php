@@ -462,7 +462,6 @@ class Expert extends CI_Controller
         $output = array(
             "id_dmg"    => $data
         );
-        // var_dump($output);
         echo json_encode($output);
     }
 
@@ -691,7 +690,7 @@ class Expert extends CI_Controller
     {
         $this->_validater();
         $id_pk = $this->input->post('id_pk[]');
-        $pertanyaan = implode(", ", $id_pk);
+        $pertanyaan = implode(",", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
             "id_pertanyaankerusakan"    => ($pertanyaan),
@@ -706,7 +705,7 @@ class Expert extends CI_Controller
     public function edit_r($id)
     {
         $data = $this->expert->getr_by_id($id);
-        $pertanyaan = explode(", ", $data['id_pertanyaankerusakan']);
+        $pertanyaan = explode(",", $data['id_pertanyaankerusakan']);
         $data = array(
             'id_rule' => $data['id_rule'],
             'id_pertanyaan' => $pertanyaan,
