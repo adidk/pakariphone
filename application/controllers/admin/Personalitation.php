@@ -18,7 +18,7 @@ class Personalitation extends CI_Controller
     {
         $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
         $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
-
+        
         $data['breadcrumtext']  = "User Profile";
         $data['tittle']         = "Profile";
         $data['url']            = "personalitation";
@@ -33,23 +33,19 @@ class Personalitation extends CI_Controller
             $this->load->view('j_admin/j_user', $data);
         } else {
 
+
             $gender = $this->input->post('gender');
             $phone = $this->input->post('phone');
-
             $update = array(
-                'gender' => $gender,
-                'phone' => $phone
+                'phone' => $phone,
+                'gender' => $gender
             );
 
             $where = array(
                 'email' => $data['user']['email']
             );
-            // $data = $this->load->model('User');
-            // $this->user->update_kategori($update, $where);
-            $this->db->where($where);
-            $this->db->update('users', $update);
-
-            // redirect('admin/personalitation');
+            $this->user->update_kategori($where, $update);
+            redirect('admin/personalitation');
         }
     }
 
@@ -61,13 +57,8 @@ class Personalitation extends CI_Controller
         $data['tittle']         = "Change Password";
         $data['url']            = "change_password";
 
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[password2]', [
-            'matches'   =>  'Password tidak sama',
-            'min_length' =>  'Password terlalu pendek'
-        ]);
-        // $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]', [
-        //     'matches'   =>  'Password tidak sama'
-        // ]);
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[5]');
+        $this->form_validation->set_rules('password1', 'Password Confirmation', 'required|matches[password]');
 
 
         if ($this->form_validation->run() == false) {
@@ -79,21 +70,14 @@ class Personalitation extends CI_Controller
         } else {
 
             $password = $this->input->post('password');
-
             $update = array(
-                'password' => '123456'
+                'password' => $password
             );
 
             $where = array(
                 'email' => $data['user']['email']
             );
-            // $data = $this->load->model('User');
-            // $this->user->update_kategori($update, $where);
-            $this->db->where($where);
-            $this->db->update('users', $update);
-
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Password Berhasil ditambahkan  </div>');
+            $this->user->update_kategori($where, $update);
             redirect('admin/personalitation/change_password');
         }
     }

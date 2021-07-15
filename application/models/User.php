@@ -49,12 +49,15 @@ class User extends CI_Model
 
     public function useronline($useronline)
     {
-        $this->db->get_where('users', array('email' => $useronline['email']));
+        // $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');   
+        $this->db->select('*');
+        $this->db->from($this->tableName);
+        $this->db->where('users', array('email' => $useronline['email']));
     }
 
-    function update_kategori($where, $ganti)
+    function update_kategori($where, $update)
     {
         $this->db->where($where);
-        $this->db->update($this->tableName, $ganti);
+        $this->db->update($this->tableName, $update);
     }
 }
