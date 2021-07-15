@@ -18,11 +18,19 @@ class Personalitation extends CI_Controller
     {
         $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
         $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
-        
+
         $data['breadcrumtext']  = "User Profile";
         $data['tittle']         = "Profile";
         $data['url']            = "personalitation";
 
+
+        if ($data['user']['gender'] == 'Perempuan') {
+            $data['perempuan'] = 'checked';
+            $data['lakilaki'] = 'unchecked';
+        } else {
+            $data['lakilaki'] = 'checked';
+            $data['perempuan'] = 'unchecked';
+        }
         $this->form_validation->set_rules('phone', 'phone', 'required');
 
         if ($this->form_validation->run() == false) {
@@ -57,9 +65,17 @@ class Personalitation extends CI_Controller
         $data['tittle']         = "Change Password";
         $data['url']            = "change_password";
 
-        $this->form_validation->set_rules('password', 'password', 'required|min_length[5]');
-        $this->form_validation->set_rules('password1', 'Password Confirmation', 'required|matches[password]');
-
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[5]', [
+            'min_length' =>  'Password minimal 5 karakter'
+        ]);
+        $this->form_validation->set_rules(
+            'password1',
+            'Password Confirmation',
+            'required|matches[password]',
+            [
+                'matches'   =>  'Password tidak sama'
+            ]
+        );
 
         if ($this->form_validation->run() == false) {
             $this->load->view('v_admin/v_a_header', $data);
@@ -71,7 +87,7 @@ class Personalitation extends CI_Controller
 
             $password = $this->input->post('password');
             $update = array(
-                'password' => $password
+                'password' => password_hash($password, PASSWORD_DEFAULT)
             );
 
             $where = array(

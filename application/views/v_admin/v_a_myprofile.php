@@ -35,11 +35,10 @@
 
                         <div class="form-check">
                             <label class="">
-                                <input type="radio" class="" name="gender" value="Perempuan">
-                                perempuan
+                                <input type="radio" class="" name="gender" value="Perempuan" <?= $perempuan ?>>perempuan
                             </label>
                             <label class="form-check-label">
-                                <input type="radio" class="" name="gender" value="laki - laki">
+                                <input type="radio" class="" name="gender" value="laki - laki" <?= $lakilaki ?>>
                                 Laki laki
                             </label>
                         </div>
