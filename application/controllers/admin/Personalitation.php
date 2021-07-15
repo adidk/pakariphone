@@ -31,7 +31,8 @@ class Personalitation extends CI_Controller
             $data['lakilaki'] = 'checked';
             $data['perempuan'] = 'unchecked';
         }
-        $this->form_validation->set_rules('phone', 'phone', 'required');
+
+        $this->form_validation->set_rules('phone', 'phone', 'required|min_length[13]|max_length[15]');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('v_admin/v_a_header', $data);
