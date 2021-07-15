@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="notelp" aria-describedby="name" placeholder="Phone Number" value="<?= $user['phone'] ?>">
+                        <input type="text" class="form-control" name="phone" aria-describedby="name" placeholder="Phone Number" value="<?= $user['phone'] ?>">
                         <small id="name" class="form-text text-muted">Phone Number</small>
                     </div>
                     <div class="form-group">
