@@ -258,10 +258,24 @@ class m_ask extends CI_Model
         return $this->db->count_all_results();
     }
 
-    function count_filtered_jawaban($id_konsultasi)
+    public function count_filtered_jawaban($id_konsultasi)
     {
         $this->_get_datatablesask_query($id_konsultasi);
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    public function insertrekap($id_konsultasi,$id_user,$id_device,$queryHasilKerusakan2){
+
+        $time = date('Y-m-d H:i:s', time());
+        $data = array(
+            'id_konsultasirhk'  => $id_konsultasi,
+            'id_kerusakanrhk'   => $queryHasilKerusakan2,
+            'id_user'           => '',
+            'id_device'         => $id_device,
+            'datetime_rhk'      => $time,
+        );
+
+        $this->db->insert('rekap_hasilkonsultasi', $data);
+    } 
 }

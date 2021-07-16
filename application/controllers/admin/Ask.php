@@ -156,6 +156,12 @@ class Ask extends CI_Controller
     public function reload_ask($id_konsultasi)
     {
 
+        $cookie = get_cookie('ask');
+
+        $id_konsultasi  = $cookie[3];
+        $id_user        = '12342341243';
+        $id_device      = $cookie[0];
+
         $this->db->select('jawaban');
         $this->db->from('riwayat_jawaban');
         $this->db->where('jawaban', 1);
@@ -187,6 +193,15 @@ class Ask extends CI_Controller
                 $this->db->where('id_kerusakan', $data);
                 $queryHasilKerusakan = $this->db->get();
                 $queryHasilKerusakan2['kerusakan_device'] = $queryHasilKerusakan->row_array();
+
+                $this->ask->insertrekap(
+                    $id_konsultasi,
+                    $id_user,
+                    $id_device,
+                    $queryHasilKerusakan2['kerusakan_device']['id_kerusakan']
+                );
+
+
                 $output = '';
                 $output .= '
                 <div class="card-body">
