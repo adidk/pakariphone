@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Jul 2021 pada 09.37
+-- Waktu pembuatan: 16 Jul 2021 pada 04.18
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -81,8 +81,9 @@ CREATE TABLE `gejala_device` (
 --
 
 INSERT INTO `gejala_device` (`id_gejala`, `nama_gejala`) VALUES
-('GJL0003', 'mantap'),
-('GJL0004', 'ini mantap');
+('GJL0001', 'LCD Mati'),
+('GJL0002', 'Mesin nyala LCD mati'),
+('GJL0003', 'LCD menyala tapi redup sekali');
 
 -- --------------------------------------------------------
 
@@ -93,6 +94,7 @@ INSERT INTO `gejala_device` (`id_gejala`, `nama_gejala`) VALUES
 CREATE TABLE `kerusakan_device` (
   `id_kerusakan` varchar(6) NOT NULL,
   `nama_kerusakan` varchar(256) NOT NULL,
+  `nama_konsultasi` varchar(256) NOT NULL,
   `deskripsi_kerusakan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -100,11 +102,9 @@ CREATE TABLE `kerusakan_device` (
 -- Dumping data untuk tabel `kerusakan_device`
 --
 
-INSERT INTO `kerusakan_device` (`id_kerusakan`, `nama_kerusakan`, `deskripsi_kerusakan`) VALUES
-('KR0001', 'satu', 'satu'),
-('KR0003', 'Tiga', 'tga'),
-('KR0004', 'Empat', 'e'),
-('KR0005', 'lima', 'l');
+INSERT INTO `kerusakan_device` (`id_kerusakan`, `nama_kerusakan`, `nama_konsultasi`, `deskripsi_kerusakan`) VALUES
+('KR0001', 'Mati Total / Konslet', 'Kemungkinan Mati Total', 'Merupakan kerusakan mesin dengan berbagai macam kemungkinan dimana kerusakan bisa termasuk kerusakan berat ataupun kerusakan ringan. Jika kerusakan termasuk kerusakan berat maka yang rusak dibagian IC (Integrated Circuit) atau chip , namun jika ringan kerusakan biasanya terjadi di kapsitor. Perlu dilakukan uji skematik jalur untuk menentukan dimana letak short.'),
+('KR0002', 'Backlight (Cahaya Redup/Tidak Muncul Tampilan)', 'LCD Redup', 'Kerusakan yang berhubungan dengan tampilan layar dimana kerusakan berasal dari IC (Integrated Circuit) Backlight. sesuai dengan namanya yaitu cahaya belakang dimana sumber cahaya tidak memperoleh daya listrik yang maksimal sehingga mengakibatkan device tidak bisa menampilkan cahaya yang maksimal bahkan bisa tergolong mati.');
 
 -- --------------------------------------------------------
 
@@ -123,10 +123,23 @@ CREATE TABLE `pertanyaan_kerusakan` (
 --
 
 INSERT INTO `pertanyaan_kerusakan` (`id_pertanyaankerusakan`, `id_gejala`, `pertanyaan`) VALUES
-('PK0001', 'GJL0003', 'pertanyaan dua Edit??'),
-('PK0003', 'GJL0004', 'mantap tanya mantap'),
-('PK0004', 'GJL0004', 'tanya dong aa'),
-('PK0005', 'GJL0003', 'aku tanya');
+('PK0001', 'GJL0001', 'Apakah LCD tidak memunculkan tampilan ?'),
+('PK0002', 'GJL0002', 'Apakah lcd mati namun device masih bergetar atau masih bisa menerima panggilan?');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `riwayat_jawaban`
+--
+
+CREATE TABLE `riwayat_jawaban` (
+  `id_riwayatjawaban` int(6) NOT NULL,
+  `id_konsultasirj` varchar(6) NOT NULL,
+  `id_pertanyaanrj` varchar(6) NOT NULL,
+  `id_userrj` varchar(50) NOT NULL,
+  `datetime_rj` datetime NOT NULL,
+  `jawaban` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -145,8 +158,7 @@ CREATE TABLE `rule_kerusakan` (
 --
 
 INSERT INTO `rule_kerusakan` (`id_rule`, `id_pertanyaankerusakan`, `id_kerusakan`) VALUES
-('RU0009', 'PK0003, PK0004, PK0005', 'KR0001'),
-('RU0010', 'PK0001, PK0003, PK0004, PK0005', 'KR0003');
+('RU0001', 'PK0001,PK0002', 'KR0002');
 
 -- --------------------------------------------------------
 
@@ -161,6 +173,7 @@ CREATE TABLE `users` (
   `first_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(14) NOT NULL,
   `password` varchar(128) NOT NULL,
   `role_id` int(1) NOT NULL,
   `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -174,8 +187,8 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `oauth_provider`, `oauth_uid`, `first_name`, `last_name`, `email`, `password`, `role_id`, `gender`, `picture`, `link`, `created`, `modified`) VALUES
-(1, 'facebook', '3810188989076022', 'Masadi', 'Kurniawan', 'masadikurniawandwi@gmail.com', '', 1, '', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=3810188989076022&height=50&width=50&ext=1627792880&hash=AeSUvM2aFORJQ8Bcl6I', 'https://www.facebook.com/', '2021-01-27 08:56:25', '2021-07-02 06:41:03');
+INSERT INTO `users` (`id`, `oauth_provider`, `oauth_uid`, `first_name`, `last_name`, `email`, `phone`, `password`, `role_id`, `gender`, `picture`, `link`, `created`, `modified`) VALUES
+(1, 'facebook', '3810188989076022', 'Masadi', 'Kurniawan', 'masadikurniawandwi@gmail.com', '812343242134', '', 1, '', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=3810188989076022&height=50&width=50&ext=1627792880&hash=AeSUvM2aFORJQ8Bcl6I', 'https://www.facebook.com/', '2021-01-27 08:56:25', '2021-07-02 06:41:03');
 
 -- --------------------------------------------------------
 
@@ -225,6 +238,12 @@ ALTER TABLE `pertanyaan_kerusakan`
   ADD PRIMARY KEY (`id_pertanyaankerusakan`);
 
 --
+-- Indeks untuk tabel `riwayat_jawaban`
+--
+ALTER TABLE `riwayat_jawaban`
+  ADD PRIMARY KEY (`id_riwayatjawaban`);
+
+--
 -- Indeks untuk tabel `rule_kerusakan`
 --
 ALTER TABLE `rule_kerusakan`
@@ -245,6 +264,12 @@ ALTER TABLE `user_role`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `riwayat_jawaban`
+--
+ALTER TABLE `riwayat_jawaban`
+  MODIFY `id_riwayatjawaban` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

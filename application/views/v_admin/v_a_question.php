@@ -5,7 +5,7 @@
                 <button class="btn btn-rounded btn-primary float-right mb-3" onclick="add_q()"><i class="fas fa-plus"></i></i> Add Question</button>
                 <button class="btn btn-rounded btn-primary float-right mb-3" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
                 <div class="table-responsive">
-                    <table id="question" class="table table-striped table-bordered no-wrap">
+                    <table id="question" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>

@@ -9,9 +9,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Damage&nbspCode</th>
-                                <th>Damage&nbspName</th>
-                                <th>Descriprion</th>
+                                <th>ID&nbspKerusakan</th>
+                                <th>Nama&Kerusakan</th>
+                                <th>Nama&nbspKonsultasi</th>
+                                <th>Deskripsi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -20,9 +21,10 @@
                         <tfoot>
                             <tr>
                                 <th>No</th>
-                                <th>Damage&nbspCode</th>
-                                <th>Damage&nbspName</th>
-                                <th>Descriprion</th>
+                                <th>ID&nbspKerusakan</th>
+                                <th>Nama&Kerusakan</th>
+                                <th>Nama&nbspKonsultasi</th>
+                                <th>Deskripsi</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>

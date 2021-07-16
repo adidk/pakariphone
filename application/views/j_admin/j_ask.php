@@ -1,12 +1,12 @@
 <script type="text/javascript">
-    var save_method_r; //for save method string
-    var table_r;
+    var save_method; //for save method string
+    var table_ask;
     var base_url = '<?php echo base_url(); ?>';
 
     $(document).ready(function() {
 
         //datatables
-        table_r = $('#ask').DataTable({
+        table_ask = $('#ask').DataTable({
 
             "processing": true, //Feature control the processing indicator.
             "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -14,7 +14,7 @@
 
             // Load data for the table's content from an Ajax source
             "ajax": {
-                "url": "<?php echo site_url('admin/expert/ajax_list_r') ?>",
+                "url": "<?php echo site_url('admin/ask/ajax_list_ask') ?>",
                 "type": "POST"
             },
 
@@ -22,155 +22,122 @@
             "columnDefs": [{
                 "targets": [-1], //last column
                 "orderable": false, //set not orderable
+                "scrollX": false,
             }, ],
+            "autoWidth": false,
+            "responsive": false,
+            "columns": [{
+                    "width": "80%"
+                },
+                null,
+            ],
+
 
         });
 
+        $('#pertanyaan-card').hide();
+
+        $('#text-askcookies').load("<?php echo base_url() ?>admin/ask/load_ask");
 
         //set input/textarea/select event when change value, remove class error and remove text help block 
-        $("input").change(function() {
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        $("textarea").change(function() {
-            $(this).parent().parent().removeClass('has-error');
-            $(this).next().empty();
-        });
-        //bikin eror select
-        // $("select").change(function() {
+        // $("#id_dvc").change(function() {
         //     $(this).parent().parent().removeClass('has-error');
         //     $(this).next().empty();
         // });
+        // $("textarea").change(function() {
+        //     $(this).parent().parent().removeClass('has-error');
+        //     $(this).next().empty();
+        // });
+        $("#id_dvc").change(function() {
+            $(this).parent().parent().removeClass('has-error');
+            $(this).next().empty();
+        });
 
     });
 
-
-    function add_r() {
-
-        $('#id_pk').select2({
-            multiple: true,
-        });
-        save_method_r = 'add';
-        $('#form')[0].reset(); // reset form on modals
-        $("#id_pk").val('').trigger('change');
-        $('.form-group').removeClass('has-error'); // clear error class
-        $('.help-block').empty(); // clear error string
-        $.ajax({
-            url: "<?php echo site_url('admin/expert/count_r') ?>",
-            type: "GET",
-            dataType: "JSON",
-            success: function(data) {
-                $('[name="id_r"]').val(data.id_r);
-                $('#modal_form').modal('show'); // show bootstrap modal
-                $('.modal-title').text('Tambah Aturan'); // Set Title to Bootstrap modal title
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('Error get data from ajax');
-            }
-        });
-    }
-
-    function edit_r(id) {
-        save_method_r = 'update';
-        $('#form')[0].reset(); // reset form on modals
-        $('.form-group').removeClass('has-error'); // clear error class
-        $('.help-block').empty(); // clear error string
-
-
-        //Ajax Load data from ajax
-        $.ajax({
-            url: "<?php echo site_url('admin/expert/edit_r') ?>/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data) {
-                const pertanyaan = data.id_pertanyaan;
-                $('#id_pk').select2({
-                    multiple: true,
-                });
-                console.log(pertanyaan);
-                $('#id_pk').val(pertanyaan).trigger('change');
-
-                $('[name="id_r"]').val(data.id_rule);
-                $('[name="id_kr"]').val(data.id_kerusakan);
-                $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Rule'); // Set title to Bootstrap modal title
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('Error get data from ajax');
-            }
-        });
-    }
-
     function reload_table() {
-        table_r.ajax.reload(null, false); //reload datatable ajax 
+        table_ask.ajax.reload(null, false); //reload datatable ajax 
     }
 
-    function save_r() {
-        $('#btnSave').text('saving...'); //change button text
-        $('#btnSave').attr('disabled', true); //set button disable 
-        var url;
+    function reload_pertanyaan(id_konsultasi) {
+        $('#pertanyaan-card').addClass('animate__animated  animate__fadeInUp');
+        $('#pertanyaan-card').load("<?php echo base_url() ?>admin/ask/reload_ask/" + id_konsultasi).show();
+    }
 
-        if (save_method_r == 'add') {
-            url = "<?php echo site_url('admin/expert/add_r') ?>";
-        } else {
-            url = "<?php echo site_url('admin/expert/update_r') ?>";
-        }
+    function save(id) {
 
         // ajax adding data to database
-        var formData = new FormData($('#form')[0]);
+        var formData = new FormData($('#form_q')[0]);
         $.ajax({
-            url: url,
+            url: "<?php echo site_url('admin/ask/save_jawaban') ?>/" + id,
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
             dataType: "JSON",
             success: function(data) {
-                if (data.status) //if success close modal and reload ajax table
-                {
-                    $('#modal_form').modal('hide');
+                $('#pertanyaan-card').addClass('animate__animated  animate__fadeOutUp');
+                setTimeout(function() {
+                    $('#pertanyaan-card').hide();
+                    $('#pertanyaan-card').removeClass('animate__animated  animate__fadeOutUp');
+                }, 900);
+                setTimeout(function() {
+                    reload_pertanyaan(data.id_konsultasi);
                     reload_table();
+                }, 900);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error Saat Menyimpan Jawaban');
+            }
+        });
+    }
+
+
+    function simpan() {
+        var formData = new FormData($('#form-kemungkinan')[0]);
+
+        //Set the Valid Flag to True if one RadioButton from the Group of RadioButtons is checked.
+        var valkemungkinan = $("input[name=id_kemungkinan]").is(":checked");
+        //Display error message if no RadioButton is checked.
+        $("#eror_kemungkinan")[0].style.display = valkemungkinan ? "none" : "block";
+
+        $.ajax({
+            url: "<?php echo site_url('admin/ask/save_device') ?>",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "JSON",
+            success: function(data) {
+                if (data.status) {
+                    $('#kemungkinan').addClass('animate__animated  animate__fadeOutUp');
+                    setTimeout(function() {
+                        $('#kemungkinan').hide();
+                    }, 900);
+                    setTimeout(function() {
+                        $('#pertanyaan-card').load("<?php echo base_url() ?>admin/ask/pertanyaan").show();
+                    }, 900);
+
                 } else {
                     for (var i = 0; i < data.inputerror.length; i++) {
                         $('[name="' + data.inputerror[i] + '"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
                         $('[name="' + data.inputerror[i] + '"]').next().text(data.error_string[i]); //select span help-block class set text error string
                     }
                 }
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled', false); //set button enable 
+
+                $('#text-askcookies').load("<?php echo base_url() ?>admin/ask/load_ask");
 
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('Error adding / update data');
-                $('#btnSave').text('save'); //change button text
-                $('#btnSave').attr('disabled', false); //set button enable 
+                alert('Error simpan data');
 
             }
-        });
-    }
+        })
 
-    function delete_r(id) {
-        if (confirm('Are you sure delete this data?')) {
-            // ajax delete data to database
-            $.ajax({
-                url: "<?php echo site_url('admin/expert/delete_r') ?>/" + id,
-                type: "POST",
-                dataType: "JSON",
-                success: function(data) {
-                    //if success reload ajax table
-                    $('#modal_form').modal('hide');
-                    reload_table();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('Error deleting data');
-                }
-            });
-
-        }
     }
 </script>
+
 
 <!-- apps -->
 <script src="<?= base_url() ?>dist/js/app-style-switcher.js"></script>

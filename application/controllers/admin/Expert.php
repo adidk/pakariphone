@@ -382,12 +382,15 @@ class Expert extends CI_Controller
         $no = $_POST['start'];
         $number = 1;
         foreach ($list as $item) {
+            $kalimat = $item->deskripsi_kerusakan;
+            $deskripsi    = substr($kalimat, 0, 50);
             $no++;
             $row = array();
             $row[] = $number++;
             $row[] = $item->id_kerusakan;
             $row[] = $item->nama_kerusakan;
-            $row[] = $item->deskripsi_kerusakan;
+            $row[] = $item->nama_konsultasi;
+            $row[] = $deskripsi . '....';
             $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_dmg(' . "'" . $item->id_kerusakan . "'" . ')"><i class="icon-pencil"></i></a>
                   <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_dmg(' . "'" . $item->id_kerusakan . "'" . ')"><i class="icon-trash"></i></a>';
 
@@ -422,6 +425,12 @@ class Expert extends CI_Controller
             $data['status'] = FALSE;
         }
 
+        if ($this->input->post('nama_kns') == '') {
+            $data['inputerror'][] = 'nama_kns';
+            $data['error_string'][] = 'Nama Konsultasi diperlukan';
+            $data['status'] = FALSE;
+        }
+
         if ($this->input->post('keterangan_dmg') == '') {
             $data['inputerror'][] = 'keterangan_dmg';
             $data['error_string'][] = 'Keterangan diperlukan';
@@ -453,7 +462,6 @@ class Expert extends CI_Controller
         $output = array(
             "id_dmg"    => $data
         );
-        // var_dump($output);
         echo json_encode($output);
     }
 
@@ -465,6 +473,7 @@ class Expert extends CI_Controller
         $data = array(
             "id_kerusakan"          => $this->input->post('id_dmg'),
             "nama_kerusakan"        => $this->input->post('nama_dmg'),
+            "nama_konsultasi"       => $this->input->post('nama_kns'),
             "deskripsi_kerusakan"   => $this->input->post('keterangan_dmg'),
         );
 
@@ -485,6 +494,7 @@ class Expert extends CI_Controller
         $data = array(
             "id_kerusakan"          => $this->input->post('id_dmg'),
             "nama_kerusakan"        => $this->input->post('nama_dmg'),
+            "nama_konsultasi"       => $this->input->post('nama_kns'),
             "deskripsi_kerusakan"   => $this->input->post('keterangan_dmg'),
         );
 
@@ -516,7 +526,7 @@ class Expert extends CI_Controller
             $row[] = $item->nama_gejala;
             $row[] = $item->pertanyaan;
             $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-pencil"></i></a>
-                  <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-trash"></i></a>';
+<a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-trash"></i></a>';
 
             $data[] = $row;
         }
@@ -680,7 +690,7 @@ class Expert extends CI_Controller
     {
         $this->_validater();
         $id_pk = $this->input->post('id_pk[]');
-        $pertanyaan = implode(", ", $id_pk);
+        $pertanyaan = implode(",", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
             "id_pertanyaankerusakan"    => ($pertanyaan),
@@ -695,7 +705,7 @@ class Expert extends CI_Controller
     public function edit_r($id)
     {
         $data = $this->expert->getr_by_id($id);
-        $pertanyaan = explode(", ", $data['id_pertanyaankerusakan']);
+        $pertanyaan = explode(",", $data['id_pertanyaankerusakan']);
         $data = array(
             'id_rule' => $data['id_rule'],
             'id_pertanyaan' => $pertanyaan,
@@ -708,7 +718,7 @@ class Expert extends CI_Controller
     {
         $this->_validater();
         $id_pk = $this->input->post('id_pk[]');
-        $pertanyaan = implode(", ", $id_pk);
+        $pertanyaan = implode(",", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
             "id_pertanyaankerusakan"    => $pertanyaan,
