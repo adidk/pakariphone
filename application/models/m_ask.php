@@ -271,8 +271,8 @@ class m_ask extends CI_Model
         $data = array(
             'id_konsultasirhk'  => $id_konsultasi,
             'id_kerusakanrhk'   => $queryHasilKerusakan2,
-            'id_user'           => '',
-            'id_device'         => $id_device,
+            'id_userrhk'           => '',
+            'id_devicerhk'         => $id_device,
             'datetime_rhk'      => $time,
         );
 

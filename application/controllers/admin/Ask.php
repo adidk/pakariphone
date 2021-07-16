@@ -158,7 +158,8 @@ class Ask extends CI_Controller
 
         $cookie = get_cookie('ask');
 
-        $id_konsultasi  = $cookie[3];
+        $cookie = explode(',', $cookie);
+
         $id_user        = '12342341243';
         $id_device      = $cookie[0];
 

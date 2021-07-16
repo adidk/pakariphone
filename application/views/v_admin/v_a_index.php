@@ -50,7 +50,7 @@
         <div class="card-body">
             <div class="d-flex d-lg-flex d-md-block align-items-center">
                 <div>
-                    <h2 class="text-dark mb-1 font-weight-medium">123</h2>
+                    <h2 class="text-dark mb-1 font-weight-medium"><?= $pertanyaan_dijawab ?></h2>
                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pertanyaan Dijawab</h6>
                 </div>
                 <div class="ml-auto mt-md-3 mt-lg-0">

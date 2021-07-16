@@ -11,8 +11,9 @@ class Dashboard extends CI_Controller
     public function index()
     {
 
-        $data['pengguna_count'] = $this->admin->penggunacount();
-        $data['pengguna_phone'] = $this->admin->penggunaphone();
+        $data['pengguna_count']     = $this->admin->penggunacount();
+        $data['pengguna_phone']     = $this->admin->penggunaphone();
+        $data['pertanyaan_dijawab'] = $this->admin->pertanyaan_dijawab();
 
         $data['breadcrumtext']  = "Hello Admin! :)";
         $data['tittle']     = "Dashboard";
