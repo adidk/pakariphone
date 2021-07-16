@@ -32,10 +32,10 @@
                         <small id="name" class="form-text text-muted">Nama Belakang</small>
                     </div>
                     <div class="form-group">
-
                         <div class="form-check">
-                            <label class="">
-                                <input type="radio" class="" name="gender" value="Perempuan" <?= $perempuan ?>>perempuan
+                            <label class="form-check-label">
+                                <input type="radio" class="" name="gender" value="Perempuan" <?= $perempuan ?>>
+                                Perempuan
                             </label>
                             <label class="form-check-label">
                                 <input type="radio" class="" name="gender" value="laki - laki" <?= $lakilaki ?>>
