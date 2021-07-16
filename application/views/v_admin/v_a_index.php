@@ -7,7 +7,7 @@
             <div class="d-flex d-lg-flex d-md-block align-items-center">
                 <div>
                     <div class="d-inline-flex align-items-center">
-                        <h2 class="text-dark mb-1 font-weight-medium">236</h2>
+                        <h2 class="text-dark mb-1 font-weight-medium"><?= $pengguna_count ?></h2>
                     </div>
                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Semua Pengguna</h6>
                 </div>
@@ -21,7 +21,7 @@
         <div class="card-body">
             <div class="d-flex d-lg-flex d-md-block align-items-center">
                 <div>
-                    <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium">5</h2>
+                    <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><?= $pengguna_count ?></h2>
                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Facebook
                     </h6>
                 </div>
@@ -36,7 +36,7 @@
             <div class="d-flex d-lg-flex d-md-block align-items-center">
                 <div>
                     <div class="d-inline-flex align-items-center">
-                        <h2 class="text-dark mb-1 font-weight-medium">30</h2>
+                        <h2 class="text-dark mb-1 font-weight-medium"><?= $pengguna_phone ?></h2>
                     </div>
                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Phone Number</h6>
                 </div>
