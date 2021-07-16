@@ -16,6 +16,8 @@ class Expert extends CI_Controller
     public function iphone()
     {
         $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "iPhone Series";
@@ -32,6 +34,7 @@ class Expert extends CI_Controller
 
     public function ajax_list_dvc()
     {
+
 
         $list = $this->expert->get_datatables_dvc();
         $data = array();
@@ -161,6 +164,9 @@ class Expert extends CI_Controller
 
     public function damage()
     {
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
+
         $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
 
         $data['breadcrumtext']  = "Expert System";
@@ -177,6 +183,8 @@ class Expert extends CI_Controller
     public function symtoms()
     {
         $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Symtoms";
@@ -192,6 +200,8 @@ class Expert extends CI_Controller
     public function rule()
     {
         $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Rule";
@@ -211,6 +221,8 @@ class Expert extends CI_Controller
     public function question()
     {
         $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
 
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Question";
