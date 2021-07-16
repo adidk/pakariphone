@@ -51,24 +51,20 @@
                             </div>
                             <h2 class="mt-3 text-center">Sign In</h2>
                             <p class="text-center">Enter your email address and password to access admin panel.</p>
-                            <form class="mt-4">
+                            <form action="<?= base_url() ?>Auth/login" class="mt-4" method="POST">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="uname">Username</label>
-                                            <input class="form-control" id="uname" type="text" placeholder="enter your username">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="pwd">Password</label>
-                                            <input class="form-control" id="pwd" type="password" placeholder="enter your password">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 text-center">
-                                        <button type="submit" class="btn btn-block btn-dark">Sign In</button>
-                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="text" class="form-control" id="current_pass" aria-describedby="name" placeholder="Masukkan Email" name="email" value="">
+                                        <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
 
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="password" class="form-control" id="" aria-describedby="name" placeholder="Masukkan Password" name="password" value="">
+                                        <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+                                    </div>
+                                    <div class="col-lg-12 text-center mt-3">
+                                        <button type="sumbit" class="btn btn-block btn-dark">Log In</button>
+                                    </div>
                             </form>
                             <div class="col-lg-12 text-center mt-3">
                                 <a href="<?php echo $authURL; ?>" class="btn btn-block btn-dark">Facebook Sign In</a>

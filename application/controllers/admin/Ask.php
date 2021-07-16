@@ -6,8 +6,11 @@ class Ask extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
         $this->load->model('m_ask', 'ask');
+        $this->load->library('facebook');
     }
+   
 
     public function ajax_list_ask()
     {
@@ -48,7 +51,10 @@ class Ask extends CI_Controller
 
     public function index()
     {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
         delete_cookie('ask');
+      
         $data['breadcrumtext']  = "Ask Question";
         $data['tittle']         = "Ask";
         $data['url']            = "Ask";

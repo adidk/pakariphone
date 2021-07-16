@@ -8,11 +8,17 @@ class Expert extends CI_Controller
         parent::__construct();
 
         $this->load->model('m_expert', 'expert');
+
+        $this->load->library('facebook');
+        $this->load->library('session');
     }
 
 
     public function iphone()
     {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "iPhone Series";
         $data['url']            = "iphone";
@@ -28,6 +34,8 @@ class Expert extends CI_Controller
 
     public function ajax_list_dvc()
     {
+
+
         $list = $this->expert->get_datatables_dvc();
         $data = array();
         $no = $_POST['start'];
@@ -156,6 +164,12 @@ class Expert extends CI_Controller
 
     public function damage()
     {
+
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
+        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
+
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Damage";
         $data['url']            = "damage";
@@ -169,6 +183,9 @@ class Expert extends CI_Controller
 
     public function symtoms()
     {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Symtoms";
         $data['url']            = "symtoms";
@@ -182,6 +199,9 @@ class Expert extends CI_Controller
 
     public function rule()
     {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Rule";
         $data['url']            = "rule";
@@ -199,6 +219,9 @@ class Expert extends CI_Controller
 
     public function question()
     {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
         $data['breadcrumtext']  = "Expert System";
         $data['tittle']         = "Question";
         $data['url']            = "question";
@@ -214,6 +237,7 @@ class Expert extends CI_Controller
 
     private function _do_upload()
     {
+
         $config['upload_path']          = './assets/images/product';
         $config['allowed_types']        = 'gif|jpg|png';
         $config['max_size']             = 100; //set max size allowed in Kilobyte
