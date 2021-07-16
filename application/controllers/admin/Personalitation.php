@@ -66,15 +66,6 @@ class Personalitation extends CI_Controller
         $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
         $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
         $data['url']            = "change_password";
-        
-        if ($data['user']['password'] == null) {
-            $data['tittle']         = "Tambah Password";
-            $data['breadcrumtext']  = "Tambah Password";
-        } else {
-            $data['tittle']         = "Ubah Password";
-            $data['breadcrumtext']  = "Ubah Password";
-
-        }
 
         $this->form_validation->set_rules('password', 'password', 'required|min_length[5]', [
             'min_length' =>  'Password minimal 5 karakter'
@@ -89,6 +80,13 @@ class Personalitation extends CI_Controller
         );
 
         if ($this->form_validation->run() == false) {
+            if ($data['user']['password'] == null) {
+                $data['tittle']         = "Tambah Password";
+                $data['breadcrumtext']  = "Tambah Password";
+            } else {
+                $data['tittle']         = "Ubah Password";
+                $data['breadcrumtext']  = "Ubah Password";
+            }
             $this->load->view('v_admin/v_a_header', $data);
             $this->load->view('v_admin/v_a_sidebar', $data);
             $this->load->view('v_admin/v_a_changepass', $data);
