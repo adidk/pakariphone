@@ -7,20 +7,14 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
 
-        // Load facebook oauth library 
-        $this->load->library('facebook');
-        $this->load->library('session');
-
-        // Load user model 
         $this->load->model('user');
         $this->load->model('m_admin', 'admin');
     }
-  
+
     public function index()
     {
         $useronline = $this->session->userdata('userData');
-        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
-
+        $data['user'] = $this->db->get_where('users', array('email' => $useronline))->row_array();
 
         $data['pengguna_count']     = $this->admin->penggunacount();
         $data['pengguna_phone']     = $this->admin->penggunaphone();

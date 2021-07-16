@@ -59,14 +59,14 @@ class Auth extends CI_Controller
         $this->load->view('v_auth/index', $data);
     }
 
-    
+
     public function login()
     {
         $password = $this->input->post('password');
         $email = $this->input->post('email');
-   
+
         $user = $this->db->get_where('users', ['email' => $email])->row_array();
-          // var_dump($user);
+        // var_dump($user);
         if ($user) {
             //jika usernya aktif
 
