@@ -12,9 +12,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" name="password1" aria-describedby="name" placeholder="Ulangi password" value="">
                         <?php echo form_error('password1', '<small class="text-danger pl-3">', '</small>'); ?>
-
                     </div>
-
                     <button type="sumbit" class="btn btn-primary"><?=$tittle?></button>
                 </form>
             </div>

@@ -9,7 +9,7 @@ class Auth extends CI_Controller
 
         // Load facebook oauth library 
         $this->load->library('facebook');
-
+        $this->load->library('session');
         // Load user model 
         $this->load->model('user');
     }
@@ -24,8 +24,6 @@ class Auth extends CI_Controller
             if ($useronline['role_id'] == 1) {
                 redirect(['admin/Dashboard']);
             } else {
-
-
                 // Preparing data for database insertion 
                 $userData['email']        = !empty($fbUser['email']) ? $fbUser['email'] : '';
                 $userData['oauth_provider'] = 'facebook';
@@ -61,60 +59,34 @@ class Auth extends CI_Controller
         $this->load->view('v_auth/index', $data);
     }
 
-    public function facebook()
-    {
-    }
+    
     public function login()
     {
-        // $gender = $this->input->post('gender');
-        // $email = $this->input->post('emai$email');
-        // $update = array(
-        //     'phone' => '89799'
-        //     // 'gender' => $gender
-        // );
+        $password = $this->input->post('password');
+        $email = $this->input->post('email');
+   
+        $user = $this->db->get_where('users', ['email' => $email])->row_array();
+          // var_dump($user);
+        if ($user) {
+            //jika usernya aktif
 
-        // $where = array(
-        //     'email' => 'bbintari13@gmail.com'
-        // );
-        // $this->user->update_kategori($where, $update);
-
-        $phone = $this->input->post('phone');
-        // $password = $this->input->post('password');
-
-        // $user = $this->db->get_where('users', ['email' => $email])->row_array();
-        //jika usernya ada
-        var_dump($phone);
-        die();
-        // if ($user) {
-        //     //jika usernya aktif
-        //     if ($user['is_active'] == 1) {
-        //         //cek password
-        //         if (password_verify($password, $user['password'])) {
-        //             $data = [
-        //                 'email' => $user['email'],
-        //                 'role_id' => $user['role_id']
-        //             ];
-        //             $this->session->set_userdata($data);
-        //             if ($user['role_id'] == 1) {
-        //                 redirect('admin');
-        //             } else {
-        //                 redirect('user');
-        //             }
-        //         } else {
-        //             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-        //             Wrong password.</div>');
-        //             redirect('auth');
-        //         }
-        //     } else {
-        //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-        //         This email has not been activated.</div>');
-        //         redirect('auth');
-        //     }
-        // } else {
-        //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-        //     Email not registered</div>');
-        //     redirect('auth');
-        // }
+            if (password_verify($password, $user['password'])) {
+                $data = [
+                    'email' => $user['email'],
+                    'role_id' => $user['role_id']
+                ];
+                $this->session->set_userdata($data);
+                if ($user['role_id'] == 1) {
+                    $this->session->set_userdata('userData', $email);
+                    redirect('Admin/dashboard');
+                } else {
+                    // redirect('user');
+                    echo 'uset';
+                }
+            } else {
+                redirect('auth');
+            }
+        }
     }
     public function logout()
     {

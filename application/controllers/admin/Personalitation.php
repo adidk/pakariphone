@@ -9,6 +9,7 @@ class Personalitation extends CI_Controller
 
         // Load facebook oauth library 
         $this->load->library('facebook');
+        $this->load->library('session');
 
         // Load user model 
         $this->load->model('user');
@@ -16,8 +17,8 @@ class Personalitation extends CI_Controller
 
     public function index()
     {
-        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
 
         $data['breadcrumtext']  = "User Profile";
         $data['tittle']         = "Profile";
@@ -63,8 +64,8 @@ class Personalitation extends CI_Controller
 
     public function change_password()
     {
-        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
         $data['url']            = "change_password";
 
         $this->form_validation->set_rules('password', 'password', 'required|min_length[5]', [
@@ -95,6 +96,7 @@ class Personalitation extends CI_Controller
         } else {
 
             $password = $this->input->post('password');
+          
             $update = array(
                 'password' => password_hash($password, PASSWORD_DEFAULT)
             );
@@ -109,8 +111,8 @@ class Personalitation extends CI_Controller
 
     public function deactive()
     {
-        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
 
         $data['breadcrumtext']  = "Deactive Account";
         $data['tittle']         = "Deactive Account";

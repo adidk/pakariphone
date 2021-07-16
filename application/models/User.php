@@ -47,12 +47,37 @@ class User extends CI_Model
         return $userID ? $userID : FALSE;
     }
 
-    public function useronline($useronline)
+    public function doLogin()
     {
-        // $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');   
-        $this->db->select('*');
-        $this->db->from($this->tableName);
-        $this->db->where('users', array('email' => $useronline['email']));
+        $post = $this->input->post();
+
+        $this->db->where('email', $post["email"]);
+        $user = $this->db->get($this->_table)->row();
+
+        if($user){
+            $isPasswordTrue = password_verify($post["password"], $user->password);
+            // $isAdmin = $user->role == "admin";
+            if($isPasswordTrue){ 
+                $this->session->set_userdata(['user_logged' => $user]);
+                // $this->_updateLastLogin($user->user_id);
+                return true;
+            }
+		}
+		return false;
+    }
+
+
+    private function _updateLastLogin($user_id)
+    {
+        $sql = "UPDATE {$this->_table} SET last_login=now() WHERE user_id={$user_id}";
+        $this->db->query($sql);
+    }
+
+
+
+    public function userLogin($useronline)
+    {
+        $this->db->get_where(  $this->tableName, array('email' =>$useronline));
     }
 
     function update_kategori($where, $update)

@@ -7,6 +7,7 @@ class Ask extends CI_Controller
     {
         parent::__construct();
 
+        $this->load->library('session');
         $this->load->model('m_ask', 'ask');
         $this->load->library('facebook');
     }
@@ -14,9 +15,8 @@ class Ask extends CI_Controller
 
     public function index()
     {
-        $data['datauser'] = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-        $useronline = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,link,gender,picture');
-        $data['user'] = $this->db->get_where('users', array('email' => $useronline['email']))->row_array();
+        $useronline = $this->session->userdata('userData');
+        $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
 
         $data['breadcrumtext']  = "Ask Question";
         $data['tittle']         = "Ask";
