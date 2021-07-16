@@ -25,7 +25,8 @@ class Ask extends CI_Controller
         foreach ($list as $item) {
             $no++;
             $row = array();
-            $row[] = $item->pertanyaan;
+            $pertanyaan = $item->pertanyaan;
+            $row[] = $pertanyaan;
             if ($item->jawaban == 1) {
                 $row[] = "Ya";
             } else {
@@ -159,12 +160,10 @@ class Ask extends CI_Controller
         $this->db->from('riwayat_jawaban');
         $this->db->where('jawaban', 1);
         $this->db->where('id_konsultasirj', $id_konsultasi);
-
         $qCek = $this->db->get();
-
         if ($qCek->num_rows() > 0) {
 
-            $query1 = $this->db->query("SELECT id_pertanyaanrj from riwayat_jawaban where jawaban ='1' and id_konsultasirj='$id_konsultasi'");
+            $query1 = $this->db->query("SELECT id_pertanyaanrj from riwayat_jawaban where jawaban =1 and id_konsultasirj='$id_konsultasi'");
             foreach ($query1->result() as $row) {
                 $a = $row->id_pertanyaanrj;
                 $b[] = $a;
@@ -201,21 +200,21 @@ class Ask extends CI_Controller
             } else {
                 $data['backward'] = $this->ask->caripertanyaan($id_konsultasi);
 
-
                 $output = '';
-                $output .= '
+                foreach ($data['backward'] as $item) {
+                    $output .= '
                 <div class="card-body">
                     <form action="#" id="form_q">
-                        <input type="hidden" name="id_pertanyaan" value="' . $data['backward']['id_pertanyaankerusakan'] . '">
+                        <input type="hidden" name="id_pertanyaan" value="' . $item['id_pertanyaankerusakan'] . '">
                         <input type="hidden" name="id_konsultasi" value="' . $id_konsultasi . '">
         
-                        <h3 class="card-title">' . $data['backward']['pertanyaan'] . '</h3>
+                        <h3 class="card-title">' . $item['pertanyaan'] . '</h3>
                     </form>
                     <button id="#btnSave" class="btn btn-sm btn-rounded btn-primary" onclick="save(1)"><i class="fa fa-check"></i> Iya</button>
                     <button id="#btnSave" class="btn btn-sm btn-rounded btn-danger" onclick="save(0)"><i class="fa fa-times"></i> Tidak</button>
                 </div>     
                 ';
-
+                }
                 echo $output;
                 return $output;
             }
@@ -223,18 +222,20 @@ class Ask extends CI_Controller
             $data['backward'] = $this->ask->caripertanyaan($id_konsultasi);
 
             $output = '';
-            $output .= '
-                <div class="card-body">
-                    <form action="#" id="form_q">
-                        <input type="hidden" name="id_pertanyaan" value="' . $data['backward']['id_pertanyaankerusakan'] . '">
-                        <input type="hidden" name="id_konsultasi" value="' . $id_konsultasi . '">
-        
-                        <h3 class="card-title">' . $data['backward']['pertanyaan'] . '</h3>
-                    </form>
-                    <button id="#btnSave" class="btn btn-sm btn-rounded btn-primary" onclick="save(1)"><i class="fa fa-check"></i> Iya</button>
-                    <button id="#btnSave" class="btn btn-sm btn-rounded btn-danger" onclick="save(0)"><i class="fa fa-times"></i> Tidak</button>
-                </div>     
-                ';
+            foreach ($data['backward'] as $item) {
+                $output .= '
+                    <div class="card-body">
+                        <form action="#" id="form_q">
+                            <input type="hidden" name="id_pertanyaan" value="' . $item['id_pertanyaankerusakan'] . '">
+                            <input type="hidden" name="id_konsultasi" value="' . $id_konsultasi . '">
+            
+                            <h3 class="card-title">' . $item['pertanyaan'] . '</h3>
+                        </form>
+                        <button id="#btnSave" class="btn btn-sm btn-rounded btn-primary" onclick="save(1)"><i class="fa fa-check"></i> Iya</button>
+                        <button id="#btnSave" class="btn btn-sm btn-rounded btn-danger" onclick="save(0)"><i class="fa fa-times"></i> Tidak</button>
+                    </div>     
+                    ';
+            }
             echo $output;
             return $output;
         }
@@ -246,7 +247,7 @@ class Ask extends CI_Controller
         $output .= '
         <div class="card-body">
             <h3 class="card-title">Mohon maaf hasil tidak ditemukan.</h3>
-            <p>Silakan hubungi kami di kontak whatsapp berikut untuk menanyakan pertanyaan yang belum ada jawaban didalam sistem pakar kami, terimakasih.</p>
+            <p> Silakan hubungi kami di kontak whatsapp berikut untuk menanyakan pertanyaan yang belum ada jawaban di dalam sistem pakar kami, terimakasih.</p>
         </div>   
         ';
         echo $output;
@@ -255,9 +256,6 @@ class Ask extends CI_Controller
 
     public function vardump()
     {
-        $data['Backward'] = $this->ask->caripertanyaan('EC39F1');
-
-        var_dump($data['Backward']);
     }
 
     private function _validatesavedvc()

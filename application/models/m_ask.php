@@ -46,12 +46,12 @@ class m_ask extends CI_Model
     public function caripertanyaan($id_konsultasi)
     {
         $this->db->select('jawaban');
-        $this->db->from($this->riwayat);
+        $this->db->from('riwayat_jawaban');
         $this->db->where('jawaban', 0);
         $this->db->where('id_konsultasirj', $id_konsultasi);
-
         $query = $this->db->get();
         $num = $query->num_rows();
+
         if ($num > 0) {
 
             $riwayat = $this->db->query("SELECT id_pertanyaanrj from riwayat_jawaban where jawaban ='0' and id_konsultasirj = '$id_konsultasi' ");
@@ -86,29 +86,28 @@ class m_ask extends CI_Model
 
                 $removeNo = explode(",", $removeNo);
 
-                foreach ($removeNo as $dtid) {
-                    $hasildataNo[] = "id_pertanyaankerusakan like '%$dtid%'";
+                foreach ($removeNo as $daata) {
+                    $hasildataNo[] = "id_pertanyaankerusakan like '%$daata%'";
                 }
 
                 $this->db->select('jawaban');
-                $this->db->from($this->riwayat);
+                $this->db->from('riwayat_jawaban');
                 $this->db->where('jawaban', 1);
                 $this->db->where('id_konsultasirj', $id_konsultasi);
                 $query2 = $this->db->get();
                 $num2 = $query2->num_rows();
             } else {
-
-                redirect('ask/noresult');
+                redirect('admin/ask/noresult');
             }
 
             if ($num2 > 0) {
                 $qriwayat = $this->db->query("SELECT id_pertanyaanrj from riwayat_jawaban where jawaban ='1' and id_konsultasirj='$id_konsultasi' ORDER BY id_riwayatjawaban asc ");
-                $qriwayatresult = $qriwayat->result_array();
+                $qriwayat = $qriwayat->result_array();
 
                 $b = '';
 
 
-                foreach ($qriwayatresult as $k) {
+                foreach ($qriwayat as $k) {
                     $vpvpvp[] = $k['id_pertanyaanrj'];
                     $c = $k['id_pertanyaanrj'];
                     $b .= "%$c%";
@@ -137,8 +136,8 @@ class m_ask extends CI_Model
                         $jawaban[] = $key['id_pertanyaanrj'];
                     }
 
-                    $hasilseluruh = implode(", ", $hasilseluruh);
-                    $hasilseluruh = explode(", ", $hasilseluruh);
+                    $hasilseluruh = implode(",", $hasilseluruh);
+                    $hasilseluruh = explode(",", $hasilseluruh);
 
                     $hasilFix = array_diff($hasilseluruh, $jawaban);
 
@@ -149,7 +148,7 @@ class m_ask extends CI_Model
                     $query5 = $query5->result_array();
                     return $query5;
                 } else {
-                    var_dump('kosong if 2');
+                    redirect('admin/ask/noresult');
                     // redirect('Halaman/noresult');
                 }
             } else {
@@ -173,7 +172,7 @@ class m_ask extends CI_Model
             $query2 = $query2->result_array();
 
             if (empty($query2)) {
-                // redirect('Halaman/noresult');
+                redirect('admin/ask/noresult');
                 var_dump('kosong if 3');
             }
 
@@ -197,7 +196,7 @@ class m_ask extends CI_Model
 
             $queryAkhir = $this->db->query("SELECT * from pertanyaan_kerusakan  where " . implode(" OR ", $zzz) . "LIMIT 1");
 
-            return $queryAkhir->row_array();
+            return $queryAkhir->result_array();
         }
     }
 

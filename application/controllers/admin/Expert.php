@@ -526,7 +526,7 @@ class Expert extends CI_Controller
             $row[] = $item->nama_gejala;
             $row[] = $item->pertanyaan;
             $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-pencil"></i></a>
-                  <a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-trash"></i></a>';
+<a class="btn btn-sm btn-rounded btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_q(' . "'" . $item->id_pertanyaankerusakan . "'" . ')"><i class="icon-trash"></i></a>';
 
             $data[] = $row;
         }
@@ -718,7 +718,7 @@ class Expert extends CI_Controller
     {
         $this->_validater();
         $id_pk = $this->input->post('id_pk[]');
-        $pertanyaan = implode(", ", $id_pk);
+        $pertanyaan = implode(",", $id_pk);
         $data = array(
             "id_rule"                   => $this->input->post('id_r'),
             "id_pertanyaankerusakan"    => $pertanyaan,

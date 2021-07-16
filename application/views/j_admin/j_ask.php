@@ -22,7 +22,16 @@
             "columnDefs": [{
                 "targets": [-1], //last column
                 "orderable": false, //set not orderable
+                "scrollX": false,
             }, ],
+            "autoWidth": false,
+            "responsive": false,
+            "columns": [{
+                    "width": "80%"
+                },
+                null,
+            ],
+
 
         });
 
@@ -51,8 +60,8 @@
     }
 
     function reload_pertanyaan(id_konsultasi) {
-        $('#pertanyaan-card').hide().removeClass('animate__animated  animate__fadeOutUp');
-        $('#pertanyaan-card').load("<?php echo base_url() ?>admin/ask/reload_ask/" + id_konsultasi).addClass('animate__animated  animate__fadeInUp').show();
+        $('#pertanyaan-card').addClass('animate__animated  animate__fadeInUp');
+        $('#pertanyaan-card').load("<?php echo base_url() ?>admin/ask/reload_ask/" + id_konsultasi).show();
     }
 
     function save(id) {
@@ -70,6 +79,7 @@
                 $('#pertanyaan-card').addClass('animate__animated  animate__fadeOutUp');
                 setTimeout(function() {
                     $('#pertanyaan-card').hide();
+                    $('#pertanyaan-card').removeClass('animate__animated  animate__fadeOutUp');
                 }, 900);
                 setTimeout(function() {
                     reload_pertanyaan(data.id_konsultasi);

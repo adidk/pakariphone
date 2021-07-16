@@ -34,10 +34,10 @@
             </div>
         </div>
         <div id="pertanyaan-card" class="card animate__animated  animate__fadeInUp">
-            
+
         </div>
         <div id="jawaban-kerusakan" class="card animate__animated  animate__fadeInUp">
-            
+
         </div>
     </div>
     <div class="col-lg-7">
@@ -47,7 +47,7 @@
 
                 </p>
                 <div class="table-responsive">
-                    <table id="ask" class="table table-striped table-bordered no-wrap">
+                    <table id="ask" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Pertanyaan</th>
