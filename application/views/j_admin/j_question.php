@@ -16,13 +16,34 @@
             "ajax": {
                 "url": "<?php echo site_url('admin/expert/ajax_list_q') ?>",
                 "type": "POST"
+
             },
 
             //Set column definition initialisation properties.
             "columnDefs": [{
                 "targets": [-1], //last column
                 "orderable": false, //set not orderable
+                "scrollX": false,
             }, ],
+            "autoWidth": false,
+            "responsive": false,
+            "columns": [{
+                    "width": "5%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "7%"
+                },
+                {
+                    "width": "20%"
+                },
+                null,
+                {
+                    "width": "10%"
+                }
+            ],
 
         });
 

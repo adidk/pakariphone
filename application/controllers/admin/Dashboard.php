@@ -13,11 +13,19 @@ class Dashboard extends CI_Controller
 
         // Load user model 
         $this->load->model('user');
+        $this->load->model('m_admin', 'admin');
     }
+  
     public function index()
     {
         $useronline = $this->session->userdata('userData');
         $data['user'] =$this->db->get_where('users', array('email' => $useronline))->row_array();
+
+
+        $data['pengguna_count']     = $this->admin->penggunacount();
+        $data['pengguna_phone']     = $this->admin->penggunaphone();
+        $data['pertanyaan_dijawab'] = $this->admin->pertanyaan_dijawab();
+
 
         $data['breadcrumtext']  = "Hello Admin! :)";
         $data['tittle']     = "Dashboard";
