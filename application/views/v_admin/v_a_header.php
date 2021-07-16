@@ -110,7 +110,7 @@
                                     My Profile</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i>
                                     Account Setting</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power" class="svg-icon mr-2 ml-1"></i>
+                                <a class="dropdown-item" href="<?=base_url('auth/logout')?>"><i data-feather="power" class="svg-icon mr-2 ml-1"></i>
                                     Logout</a>
                             </div>
                         </li>
