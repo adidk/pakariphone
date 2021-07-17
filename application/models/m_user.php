@@ -36,6 +36,7 @@ class m_user extends CI_Model
                 //insert user data
                 $userData['created']  = date("Y-m-d H:i:s");
                 $userData['modified'] = date("Y-m-d H:i:s");
+                $userData['role_id']   = 2;
                 $insert = $this->db->insert($this->tableName, $userData);
 
                 //get user ID
