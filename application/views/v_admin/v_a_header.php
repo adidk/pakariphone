@@ -59,7 +59,7 @@
                     <!-- ============================================================== -->
                     <div class="navbar-brand">
                         <!-- Logo icon -->
-                        <a href="index.html">
+                        <a href="<?= base_url() ?>admin/dashboard">
                             <b class="logo-icon">
                                 <!-- Dark Logo icon -->
                                 <img src="<?= base_url() ?>/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
