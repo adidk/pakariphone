@@ -5,3 +5,15 @@
 .text-black{
     color: #616161;
 }
+
+.bg-custom{
+    background:url(../../assets/images/big/auth.jpg) ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    background-size: cover;
+}
+

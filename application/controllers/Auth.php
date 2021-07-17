@@ -102,4 +102,6 @@ class Auth extends CI_Controller
         // Redirect to login page 
         redirect('Auth');
     }
+
+   
 }

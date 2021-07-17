@@ -14,11 +14,6 @@
 <script src="<?= base_url() ?>assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
 <script src="<?= base_url() ?>dist/js/pages/dashboards/dashboard1.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('#rule').DataTable();
-    });
-</script>
 
 
 </body>

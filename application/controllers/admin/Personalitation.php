@@ -7,10 +7,6 @@ class Personalitation extends CI_Controller
     {
         parent::__construct();
 
-        // Load facebook oauth library 
-        $this->load->library('facebook');
-        $this->load->library('session');
-
         // Load user model 
         $this->load->model('m_user', 'user');
         $this->load->model('m_admin', 'admin');
@@ -136,6 +132,32 @@ class Personalitation extends CI_Controller
             $this->load->view('v_admin/v_a_deactive', $data);
             $this->load->view('v_admin/v_a_footer', $data);
             $this->load->view('j_admin/j_deactive', $data);
+        } else {
+            redirect('auth');
+        }
+    }
+
+    public function delete_facebook()
+    {
+        $useronline = $this->session->userdata('userData');
+        $data['user'] = $this->user->get_user($useronline['email']);
+
+        if ($this->facebook->is_authenticated() || $this->session->userdata('userData')) {
+            if ($this->input->post('agree') == 1) {
+
+                //  
+                $this->db->where('oauth_uid', $data['user']['oauth_uid']);
+                $this->db->delete('users');
+
+                // Remove local Facebook session 
+                $this->facebook->destroy_session();
+                // Remove user data from session 
+                $this->session->unset_userdata('userData');
+                // Redirect to login page 
+                redirect('auth');
+            } else {
+                redirect('admin/personalitation/deactive');
+            }
         } else {
             redirect('auth');
         }

@@ -13,6 +13,7 @@
     <title>Sistem Pakar Kerusakan iPhone</title>
     <!-- Custom CSS -->
     <link href="<?= base_url() ?>/dist/css/style.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/dist/css/custom.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,7 +25,7 @@
 <?php if (!empty($authURL)) { ?>
 
     <body>
-        <div class="main-wrapper">
+        <div class="main-wrapper bg-custom">
             <!-- ============================================================== -->
             <!-- Preloader - style you can find in spinners.css -->
             <!-- ============================================================== -->
@@ -40,14 +41,14 @@
             <!-- ============================================================== -->
             <!-- Login box.scss -->
             <!-- ============================================================== -->
-            <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative" style="background:url(<?= base_url() ?>/assets/images/big/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative">
                 <div class="auth-box row">
-                    <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(<?= base_url() ?>/assets/images/big/3.jpg);">
+                    <div class="col-lg-6 col-md-6 modal-bg-img" style="background-image: url(<?= base_url() ?>/assets/images/big/3.jpg);">
                     </div>
-                    <div class="col-lg-5 col-md-7 bg-white">
+                    <div class="col-lg-6 col-md-6 bg-white">
                         <div class="p-3">
                             <div class="text-center">
-                                <img src="<?= base_url() ?>/assets/images/big/icon.png" alt="wrapkit">
+                                <img src="<?= base_url() ?>/assets/images/big/icon.png" width="60" alt="wrapkit">
                             </div>
                             <h2 class="mt-3 text-center">Sign In</h2>
                             <p class="text-center">Masukkan E-mail dan password atau login menggunakan Facebook anda untuk mengakses Sistem Pakar diagnosa iPhone.</p>
@@ -69,8 +70,13 @@
                             <div class="col-lg-12 text-center mt-3">
                                 <a href="<?php echo $authURL; ?>" class="btn btn-block btn-dark">Facebook Sign In</a>
                             </div>
+
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-12 text-center p-3 bg-white">
+                    Jika anda belum mengetahui kami anda bisa klil link <a href="<?= base_url() ?>welcome/tentang_kami" class="text-danger"> Tentang Sistem Pakar Kerusakan iPhone</a>.
+                    Klik link <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger">Term and Condition Facebook</a> untuk ketentuan login menggunakan akun Facebook.
                 </div>
             </div>
         </div>
