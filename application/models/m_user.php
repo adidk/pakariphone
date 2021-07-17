@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Model
+class m_user extends CI_Model
 {
     function __construct()
     {
@@ -54,16 +54,16 @@ class User extends CI_Model
         $this->db->where('email', $post["email"]);
         $user = $this->db->get($this->_table)->row();
 
-        if($user){
+        if ($user) {
             $isPasswordTrue = password_verify($post["password"], $user->password);
             // $isAdmin = $user->role == "admin";
-            if($isPasswordTrue){ 
+            if ($isPasswordTrue) {
                 $this->session->set_userdata(['user_logged' => $user]);
                 // $this->_updateLastLogin($user->user_id);
                 return true;
             }
-		}
-		return false;
+        }
+        return false;
     }
 
 
@@ -73,11 +73,20 @@ class User extends CI_Model
         $this->db->query($sql);
     }
 
+    public function get_user($email)
+    {
+        $this->db->select();
+        $this->db->from('users');
+        $this->db->where('email', $email);
+
+        return $this->db->get()->row_array();
+    }
+
 
 
     public function userLogin($useronline)
     {
-        $this->db->get_where(  $this->tableName, array('email' =>$useronline));
+        $this->db->get_where($this->tableName, array('email' => $useronline));
     }
 
     function update_kategori($where, $update)

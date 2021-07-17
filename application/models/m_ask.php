@@ -265,17 +265,18 @@ class m_ask extends CI_Model
         return $query->num_rows();
     }
 
-    public function insertrekap($id_konsultasi,$id_user,$id_device,$queryHasilKerusakan2){
+    public function insertrekap($id_konsultasi, $id_user, $id_device, $queryHasilKerusakan2)
+    {
 
         $time = date('Y-m-d H:i:s', time());
         $data = array(
-            'id_konsultasirhk'  => $id_konsultasi,
-            'id_kerusakanrhk'   => $queryHasilKerusakan2,
-            'id_userrhk'           => '',
-            'id_devicerhk'         => $id_device,
-            'datetime_rhk'      => $time,
+            'id_konsultasirhk'      => $id_konsultasi,
+            'id_kerusakanrhk'       => $queryHasilKerusakan2,
+            'id_userrhk'            => $id_user,
+            'id_devicerhk'          => $id_device,
+            'datetime_rhk'          => $time,
         );
 
         $this->db->insert('rekap_hasilkonsultasi', $data);
-    } 
+    }
 }

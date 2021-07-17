@@ -50,7 +50,7 @@
                                 <img src="<?= base_url() ?>/assets/images/big/icon.png" alt="wrapkit">
                             </div>
                             <h2 class="mt-3 text-center">Sign In</h2>
-                            <p class="text-center">Enter your email address and password to access admin panel.</p>
+                            <p class="text-center">Masukkan E-mail dan password atau login menggunakan Facebook anda untuk mengakses Sistem Pakar diagnosa iPhone.</p>
                             <form action="<?= base_url() ?>Auth/login" class="mt-4" method="POST">
                                 <div class="row">
                                     <div class="form-group col-lg-12">
@@ -68,9 +68,6 @@
                             </form>
                             <div class="col-lg-12 text-center mt-3">
                                 <a href="<?php echo $authURL; ?>" class="btn btn-block btn-dark">Facebook Sign In</a>
-                            </div>
-                            <div class="col-lg-12 text-center mt-5">
-                                Don't have an account? <a href="#" class="text-danger">Sign Up</a>
                             </div>
                         </div>
                     </div>

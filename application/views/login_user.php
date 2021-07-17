@@ -49,10 +49,10 @@
                             <img src="<?= base_url() ?>/assets/images/big/icon.png" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Sign In</h2>
-                        <p class="text-center">Enter your email address and password to access admin panel.</p>
+                        <p class="text-center">Masukkan E-mail dan password atau login menggunakan Facebook anda untuk mengakses Sistem Pakar diagnosa iPhone.</p>
                         <form action="<?= base_url() ?>Auth/login" class="mt-4" method="POST">
                             <div class="row">
-                            <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-12">
                                     <input type="text" class="form-control" id="current_pass" aria-describedby="name" placeholder="Masukkan Email" name="email" value="">
                                     <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
 

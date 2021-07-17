@@ -23,4 +23,11 @@ class m_admin extends CI_Model
         $this->db->from('rekap_hasilkonsultasi');
         return $this->db->count_all_results();
     }
+    public function pertanyaan_dijawab_uid($id_user)
+    {
+        $this->db->select();
+        $this->db->from('rekap_hasilkonsultasi');
+        $this->db->where('id_userrhk', $id_user);
+        return $this->db->count_all_results();
+    }
 }
