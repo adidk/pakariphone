@@ -12,11 +12,12 @@ class m_admin extends CI_Model
 
     public function penggunaphone()
     {
-        $this->db->select();
+        $this->db->select('phone');
         $this->db->from('users');
-        $this->db->where('phone is NOT NULL');
+        $this->db->where('phone !=', '');
         return $this->db->count_all_results();
     }
+
     public function pertanyaan_dijawab()
     {
         $this->db->select();
