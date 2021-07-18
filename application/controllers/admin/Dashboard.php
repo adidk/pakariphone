@@ -29,7 +29,7 @@ class Dashboard extends CI_Controller
 
                 $this->load->view('v_admin/v_a_header', $data);
                 $this->load->view('v_admin/v_a_sidebar', $data);
-                $this->load->view('v_admin/v_a_index', $data);
+                $this->load->view('v_admin/v_a_dashboard', $data);
                 $this->load->view('v_admin/v_a_footer');
                 $this->load->view('j_admin/j_dashboard', $data);
             } else {
