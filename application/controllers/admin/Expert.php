@@ -47,11 +47,10 @@ class Expert extends CI_Controller
             $list = $this->expert->get_datatables_dvc();
             $data = array();
             $no = $_POST['start'];
-            $number = 1;
             foreach ($list as $device) {
                 $no++;
                 $row = array();
-                $row[] = $number++;
+                $row[] = $no;
                 $row[] = $device->id_device;
                 $row[] = $device->name_device;
                 $row[] = '<img src="' . base_url() . 'assets/images/product/' . $device->image . '" class="img-fluid" alt="' . $device->image . '" style="height: 40px;">';
@@ -362,11 +361,10 @@ class Expert extends CI_Controller
             $list = $this->expert->get_datatables_gejala();
             $data = array();
             $no = $_POST['start'];
-            $number = 1;
             foreach ($list as $gjl) {
                 $no++;
                 $row = array();
-                $row[] = $number++;
+                $row[] = $no;
                 $row[] = $gjl->id_gejala;
                 $row[] = $gjl->nama_gejala;
                 $row[] = '<a class="btn btn-sm btn-rounded btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_gjl(' . "'" . $gjl->id_gejala . "'" . ')"><i class="icon-pencil"></i></a>
@@ -504,13 +502,12 @@ class Expert extends CI_Controller
             $list = $this->expert->get_datatables_damage();
             $data = array();
             $no = $_POST['start'];
-            $number = 1;
             foreach ($list as $item) {
                 $kalimat = $item->deskripsi_kerusakan;
                 $deskripsi    = substr($kalimat, 0, 50);
                 $no++;
                 $row = array();
-                $row[] = $number++;
+                $row[] = $no;
                 $row[] = $item->id_kerusakan;
                 $row[] = $item->nama_kerusakan;
                 $row[] = $item->nama_konsultasi;
@@ -667,12 +664,11 @@ class Expert extends CI_Controller
             $list = $this->expert->get_datatables_q();
             $data = array();
             $no = $_POST['start'];
-            $number = 1;
 
             foreach ($list as $item) {
                 $no++;
                 $row = array();
-                $row[] = $number++;
+                $row[] = $no;
                 $row[] = $item->id_pertanyaankerusakan;
                 $row[] = $item->id_gejala;
                 $row[] = $item->nama_gejala;
@@ -821,11 +817,10 @@ class Expert extends CI_Controller
             $list = $this->expert->get_datatables_r();
             $data = array();
             $no = $_POST['start'];
-            $number = 1;
             foreach ($list as $item) {
                 $no++;
                 $row = array();
-                $row[] = $number++;
+                $row[] = $no;
                 $row[] = $item->id_rule;
                 $row[] = $item->id_pertanyaankerusakan;
                 $row[] = $item->nama_kerusakan;

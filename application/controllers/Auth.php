@@ -71,7 +71,7 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
 
         $user = $this->db->get_where('users', ['email' => $email])->row_array();
-        // var_dump($user);
+
         if ($user) {
             //jika usernya aktif
 
@@ -102,6 +102,4 @@ class Auth extends CI_Controller
         // Redirect to login page 
         redirect('Auth');
     }
-
-   
 }

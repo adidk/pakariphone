@@ -32,12 +32,6 @@
                      <li class="sidebar-item">
                          <a class="sidebar-link sidebar-link" href="<?= base_url() ?>admin/user" aria-expanded="false"><i class="feather-icon icon-people"></i><span class="hide-menu">All User</span></a>
                      </li>
-                     <li class="sidebar-item">
-                         <a class="sidebar-link sidebar-link" href="<?= base_url() ?>admin/user/facebook_user" aria-expanded="false"><i data-feather="facebook" class="feather-icon"></i><span class="hide-menu">Facebook</span></a>
-                     </li>
-                     <li class="sidebar-item">
-                         <a class="sidebar-link sidebar-link" href="<?= base_url() ?>admin/user/phone_user" aria-expanded="false"><i data-feather="phone" class="feather-icon"></i><span class="hide-menu">Phone Number</span></a>
-                     </li>
                      <li class="list-divider"></li>
 
                      <li class="nav-small-cap"><span class="hide-menu">Expert System</span></li>
