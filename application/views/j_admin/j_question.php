@@ -194,7 +194,7 @@
                 <form action="#" id="form" class="form-horizontal">
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="control-label col-md-12">ID&nbspertanyaan</label>
+                            <label class="control-label col-md-12">ID&nbspPertanyaan</label>
                             <div class="col-md-12">
                                 <input name="id_q" placeholder="ID Kerusakan" class="form-control" type="text" readonly>
                                 <span class="help-block"></span>

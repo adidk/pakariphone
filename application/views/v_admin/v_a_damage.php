@@ -10,7 +10,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID&nbspKerusakan</th>
-                                <th>Nama&Kerusakan</th>
+                                <th>Nama&nbspKerusakan</th>
                                 <th>Nama&nbspKonsultasi</th>
                                 <th>Deskripsi</th>
                                 <th>Action</th>
@@ -22,7 +22,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>ID&nbspKerusakan</th>
-                                <th>Nama&Kerusakan</th>
+                                <th>Nama&nbspKerusakan</th>
                                 <th>Nama&nbspKonsultasi</th>
                                 <th>Deskripsi</th>
                                 <th>Action</th>
