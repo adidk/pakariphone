@@ -50,23 +50,25 @@
                         </div>
                         <h2 class="mt-3 text-center">Sign In</h2>
                         <p class="text-center">Masukkan E-mail dan password atau login menggunakan Facebook anda untuk mengakses Sistem Pakar diagnosa iPhone.</p>
-                        <form action="<?= base_url() ?>Auth/login" class="mt-4" method="POST">
+                        <?= $this->session->flashdata('message') ?>
+                        <form action="<?= base_url() ?>auth/login" class="mt-4 needs-validation" method="POST">
                             <div class="row">
                                 <div class="form-group col-lg-12">
-                                    <input type="text" class="form-control" id="current_pass" aria-describedby="name" placeholder="Masukkan Email" name="email" value="">
-                                    <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+                                    <input type="text" class="form-control" id="email" aria-describedby="name" placeholder="Masukkan Email" name="email" value="">
+                                    <?php echo form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
 
                                 </div>
                                 <div class="form-group col-lg-12">
-                                    <input type="password" class="form-control" id="" aria-describedby="name" placeholder="Masukkan Password" name="password" value="">
+                                    <input type="password" class="form-control" id="password" aria-describedby="name" placeholder="Masukkan Password" name="password" value="">
                                     <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+
                                 </div>
                                 <div class="col-lg-12 text-center mt-3">
                                     <button type="sumbit" class="btn btn-block btn-dark">Log In</button>
                                 </div>
                         </form>
                         <div class="col-lg-12 text-center mt-3">
-                            <a href="<?= base_url() ?>Auth" class="btn btn-block btn-dark">Facebook Sign In</a>
+                            <a href="<?= base_url() ?>auth" class="btn btn-block btn-dark">Facebook Sign In</a>
                         </div>
                         <div class="col-lg-12 text-center mt-5">
                             Don't have an account? <a href="#" class="text-danger">Sign Up</a>
@@ -86,8 +88,8 @@
     <!-- ============================================================== -->
     <script src="<?= base_url() ?>/assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="<?= base_url() ?>/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="<?= base_url() ?>/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<?= base_url() ?>assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="<?= base_url() ?>assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
