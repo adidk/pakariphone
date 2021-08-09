@@ -39,6 +39,7 @@ class Auth extends CI_Controller
                     $userData['first_name']    = !empty($fbUser['first_name'] . ' ' . $fbUser['middle_name']) ? $fbUser['first_name'] . ' ' . $fbUser['middle_name'] : '';
                     $userData['last_name']    = !empty($fbUser['last_name']) ? $fbUser['last_name'] : '';
                     $userData['gender']        = !empty($fbUser['gender']) ? $fbUser['gender'] : '';
+                    $userData['role_id']        = 2;
                     $userData['picture']    = !empty($fbUser['picture']['data']['url']) ? $fbUser['picture']['data']['url'] : '';
                     $userData['link']        = !empty($fbUser['link']) ? $fbUser['link'] : 'https://www.facebook.com/';
 
@@ -91,11 +92,13 @@ class Auth extends CI_Controller
                     'role_id' => $user['role_id']
                 ];
 
-                $this->session->set_userdata('userData', $data);
+
                 if (password_verify($password, $user['password'])) {
                     if ($user['role_id'] == 1) {
+                        $this->session->set_userdata('userData', $data);
                         redirect('admin/dashboard');
                     } else {
+                        $this->session->set_userdata('userData', $data);
                         redirect('admin/personalitation');
                     }
                 } else {

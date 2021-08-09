@@ -58,6 +58,9 @@ class Personalitation extends CI_Controller
                     'email' => $data['user']['email']
                 );
                 $this->user->update_kategori($where, $update);
+
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+                   Data berhasil diubah.</div>');
                 redirect('admin/personalitation');
             }
         } else {

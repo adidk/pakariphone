@@ -47,10 +47,19 @@
                             <!-- <img src="<?= base_url() ?>/assets/images/big/icon.png" alt="wrapkit"> -->
                         </div>
                         <h2 class="mt-3 text-center">Kebijakan Privasi</h2>
-                        <p class="text-center">Kami akan mengambil informasi dari akun anda seperti Nama, E-mail, Umur dan Gender. Data tersebut akan digunakan untuk memberikan informasi promosi mengenai prodak service dan promo service yang kita tawarkan.</p>
+                        <p class="">Aplikasi sistem pakar kerusakan iphone akan menggunakan data facebook anda. Kami tentunya paham akan keamanan akun anda oleh sebab itu kami mengambil data data berikut untuk autentiktikasi login menggunakan akun facebook.
+                            Data yang kami ambil adalah :
+                        </p>
+                        <ul>
+                            <li>first name , last name </li>
+                            <li>email</li>
+                            <li>profil picture</li>
+                        </ul>
 
+                        <p>Kami akan menggunakan data diatas untuk kepentingan promosi dan follow up penawaran produk penggantian part sesuai dengan konsultasi yang telah anda lakukan didalam sistem pakar. Jika anda merasa keberatan untuk menginggalkan data anda didalam sistem kami
+                            anda dapat melakukan penghapusan akun melalui<a href="<?= base_url() ?>admin/personalitation/deactive" class="text-danger"> Deactive Account</a>.
+                        </p>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Profile</h4>
+                <?= $this->session->flashdata('message') ?>
                 <form action="" class="mt-3" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-control" id="nametext" aria-describedby="name" placeholder="First Name" value="<?= $user['first_name'] ?>" readonly>

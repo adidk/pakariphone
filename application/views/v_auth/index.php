@@ -78,6 +78,8 @@
                 <div class="col-lg-12 text-center p-3 bg-white">
                     Jika anda belum mengetahui kami anda bisa klil link <a href="<?= base_url() ?>welcome/tentang_kami" class="text-danger"> Tentang Sistem Pakar Kerusakan iPhone</a>.
                     Klik link <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger">Term and Condition Facebook</a> untuk ketentuan login menggunakan akun Facebook.
+                    <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger"> Privacy Policy</a>
+
                 </div>
             </div>
         </div>
