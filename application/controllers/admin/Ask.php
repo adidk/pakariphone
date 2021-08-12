@@ -8,7 +8,6 @@ class Ask extends CI_Controller
         parent::__construct();
         $this->load->model('m_ask', 'ask');
         $this->load->model('m_user', 'user');
-
     }
 
 
@@ -241,13 +240,14 @@ class Ask extends CI_Controller
                         $id_device,
                         $queryHasilKerusakan2['kerusakan_device']['id_kerusakan']
                     );
-
+                    $hasil_kerusakan =  $queryHasilKerusakan2['kerusakan_device']['nama_kerusakan'];
 
                     $output = '';
                     $output .= '
                 <div class="card-body">
                     <h3 class="card-title">' . $queryHasilKerusakan2['kerusakan_device']['nama_kerusakan'] . '</h3>
                     <p>' . $queryHasilKerusakan2['kerusakan_device']['deskripsi_kerusakan'] . '</p>
+                    <a class="btn btn-rounded btn-success" href="https://wa.me/6281575403733?text=Saya%20telah%20melakukan%20pengecekan%20di%20Sistem%20pakar%20dengan%20kendala%20' . $hasil_kerusakan . '"><i class="fab fa-whatsapp"> Hubungi Kami Untuk Booking Servis</i></a>
                 </div>   
                 ';
 
@@ -309,6 +309,7 @@ class Ask extends CI_Controller
         <div class="card-body">
             <h3 class="card-title">Mohon maaf hasil tidak ditemukan.</h3>
             <p> Silakan hubungi kami di kontak whatsapp berikut untuk menanyakan pertanyaan yang belum ada jawaban di dalam sistem pakar kami, terimakasih.</p>
+            <a class="btn btn-rounded btn-success" href="https://wa.me/6281575403733?text=Saya%20telah%20melakukan%20pengecekan%20di%20Sistem%20pakar%20namun%20tidak%20mendapatkan%20jawaban"><i class="fab fa-whatsapp"> Hubungi Kami</i></a>
         </div>   
         ';
             echo $output;
