@@ -789,9 +789,9 @@ class Expert extends CI_Controller
                 $data['status'] = FALSE;
             }
 
-            if ($this->input->post('id_g') == '') {
+            if ($this->input->post('id_g') == 'Pilih') {
                 $data['inputerror'][] = 'id_g';
-                $data['error_string'][] = 'Gejala Kerusakan diperlukan';
+                $data['error_string'][] = 'Silakan pilih gejala';
                 $data['status'] = FALSE;
             }
 
@@ -951,12 +951,12 @@ class Expert extends CI_Controller
             }
 
             if ($this->input->post('id_pk[]') == '') {
-                $data['inputerror'][] = 'id_pk[]';
-                $data['error_string'][] = 'Pertanyaan Kerusakan diperlukan';
+                // $data['inputerror'][] = 'id_pk[]';
+                // $data['error_string'][] = 'Pertanyaan Kerusakan diperlukan';
                 $data['status'] = FALSE;
             }
 
-            if ($this->input->post('id_kr') == ' ') {
+            if ($this->input->post('id_kr') == 'Pilih') {
                 $data['inputerror'][] = 'id_kr';
                 $data['error_string'][] = 'Kerusakan diperlukan';
                 $data['status'] = FALSE;

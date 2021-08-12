@@ -69,7 +69,8 @@
                                     </div>
                             </form>
                             <div class="col-lg-12 text-center mt-3">
-                                <a href="<?php echo $authURL; ?>" class="btn btn-block btn-dark">Facebook Sign In</a>
+                                <p class="text-center">Gunakan Akun Social Media Untuk Log-in</p>
+                                <a href="<?php echo $authURL; ?>" class="btn btn-block btn-primary"><i class="fab fa-facebook-square"></i> Sign In</a>
                             </div>
 
                         </div>
@@ -77,9 +78,8 @@
                 </div>
                 <div class="col-lg-12 text-center p-3 bg-white">
                     Jika anda belum mengetahui kami anda bisa klil link <a href="<?= base_url() ?>welcome/tentang_kami" class="text-danger"> Tentang Sistem Pakar Kerusakan iPhone</a>.
-                    Klik link <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger">Term and Condition Facebook</a> untuk ketentuan login menggunakan akun Facebook.
-                    <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger"> Privacy Policy</a>
-
+                    Saya telah membaca dan menerima <a href="<?= base_url() ?>welcome/ketentuan_layanan" class="text-danger">Ketentuan Layanan Pengguna</a> dan
+                    <a href="<?= base_url() ?>welcome/kebijakan_privasi" class="text-danger"> Kebijakan Privasi Sistem Pakar iPhone.</a>
                 </div>
             </div>
         </div>

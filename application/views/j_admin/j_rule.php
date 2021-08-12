@@ -36,11 +36,10 @@
             $(this).parent().parent().removeClass('has-error');
             $(this).next().empty();
         });
-        //bikin eror select
-        // $("select").change(function() {
-        //     $(this).parent().parent().removeClass('has-error');
-        //     $(this).next().empty();
-        // });
+        $("#id_kr").change(function() {
+            $(this).parent().parent().removeClass('has-error');
+            $(this).next().empty();
+        });
 
     });
 
@@ -191,26 +190,26 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div id="form-select" class="form-group">
                             <label class="control-label col-md-12">Pertanyaan</label>
                             <div class="col-md-12">
-                                <select id="id_pk" name="id_pk[]" data-placeholder="Pilih beberapa pertanyaan" multiple="multiple" class="custom-select">
+                                <select id="id_pk" name="id_pk[]" data-placeholder="Pilih beberapa pertanyaan" multiple="multiple" class="custom-select" required>
                                     <?php foreach ($pertanyaan as $pk) : ?>
                                         <option value="<?= $pk['id_pertanyaankerusakan']; ?>"><?= $pk['pertanyaan'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-12">Kerusakan</label>
                             <div class="col-md-12">
                                 <select id="id_kr" name="id_kr" class="form-control">
-                                    <option value=" " selected>Pilih</option>
+                                    <option selected>Pilih</option>
                                     <?php foreach ($kerusakan as $kr) : ?>
                                         <option value="<?= $kr['id_kerusakan']; ?>"><?= $kr['nama_kerusakan'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <span class="help-block"></span>
                             </div>
                         </div>
                     </div>
